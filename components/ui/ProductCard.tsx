@@ -5,6 +5,7 @@ import { Heart } from "lucide-react";
 import { clsx } from "clsx";
 import type { Product } from "@/lib/products";
 import { useWishlistStore } from "@/lib/store/wishlist";
+import { useToastStore } from "@/lib/store/toast";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
@@ -12,6 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
   const { name, colorway, price, accent, badge, slug, id } = product;
   const wishlisted = useWishlistStore((s) => s.ids.has(id));
   const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const pushToast = useToastStore((s) => s.push);
 
   return (
     <Link
@@ -33,6 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
           onClick={(e) => {
             e.preventDefault();
             toggleWishlist(id);
+            pushToast(wishlisted ? "Removed from wishlist" : "Added to wishlist", "info");
           }}
           className={clsx(
             "absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-pill bg-krama-surface/90 text-krama-text-dark opacity-0 transition-opacity duration-300 group-hover:opacity-100",

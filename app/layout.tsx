@@ -3,6 +3,8 @@ import { Syne, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { CustomCursor } from "@/components/motion/CustomCursor";
+import { CartDrawer } from "@/components/layout/CartDrawer";
+import { Toaster } from "@/components/ui/Toaster";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -38,6 +40,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SmoothScroll>
           <CustomCursor />
           {children}
+          <CartDrawer />
+          <Toaster />
         </SmoothScroll>
       </body>
     </html>

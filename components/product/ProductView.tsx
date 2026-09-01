@@ -14,6 +14,7 @@ import { Modal } from "@/components/ui/Modal";
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { useCartStore } from "@/lib/store/cart";
 import { useWishlistStore } from "@/lib/store/wishlist";
+import { useToastStore } from "@/lib/store/toast";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
@@ -30,6 +31,7 @@ export function ProductView({ product }: { product: Product }) {
   const addItem = useCartStore((s) => s.addItem);
   const wishlisted = useWishlistStore((s) => s.ids.has(product.id));
   const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const pushToast = useToastStore((s) => s.push);
 
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [quantity, setQuantity] = useState(1);
@@ -58,6 +60,7 @@ export function ProductView({ product }: { product: Product }) {
       return;
     }
     addItem({ product, size: selectedSize, color: product.colorway }, quantity);
+    pushToast(`${product.name} added to cart`, "success");
     setAdded(true);
     setTimeout(() => setAdded(false), 1800);
   }
@@ -180,7 +183,13 @@ export function ProductView({ product }: { product: Product }) {
             <button
               data-cursor="interactive"
               aria-label="Add to wishlist"
-              onClick={() => toggleWishlist(product.id)}
+              onClick={() => {
+                toggleWishlist(product.id);
+                pushToast(
+                  wishlisted ? "Removed from wishlist" : "Added to wishlist",
+                  "info"
+                );
+              }}
               className={clsx(
                 "grid h-14 w-14 shrink-0 place-items-center rounded-pill border transition-colors duration-200",
                 wishlisted

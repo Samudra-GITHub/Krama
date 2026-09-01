@@ -1,16 +1,13 @@
 "use client";
 
 import { Heart } from "lucide-react";
+import type { Product } from "@/lib/products";
 
-interface ProductCardProps {
-  name: string;
-  colorway: string;
-  price: string;
-  accent: string;
-  badge?: string;
-}
+const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
-export function ProductCard({ name, colorway, price, accent, badge }: ProductCardProps) {
+export function ProductCard({ product }: { product: Product }) {
+  const { name, colorway, price, accent, badge } = product;
+
   return (
     <div
       data-cursor="interactive"
@@ -54,7 +51,9 @@ export function ProductCard({ name, colorway, price, accent, badge }: ProductCar
       <div className="flex flex-col gap-1 px-5 py-4">
         <h3 className="font-body text-sm font-medium text-krama-text-dark">{name}</h3>
         <p className="text-xs uppercase tracking-meta text-krama-text-muted">{colorway}</p>
-        <p className="mt-1 font-mono text-sm tabular-nums text-krama-text-dark">{price}</p>
+        <p className="mt-1 font-mono text-sm tabular-nums text-krama-text-dark">
+          {formatPrice(price)}
+        </p>
       </div>
     </div>
   );

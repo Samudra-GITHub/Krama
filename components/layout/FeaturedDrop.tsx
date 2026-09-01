@@ -4,12 +4,9 @@ import { useRef } from "react";
 import { gsap, useGSAP, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { ProductCard } from "@/components/ui/ProductCard";
+import { PRODUCTS } from "@/lib/products";
 
-const PRODUCTS = [
-  { name: "Gati Runner", colorway: "Gully Haze", price: "₹12,999", accent: "#38bdf8", badge: "New" },
-  { name: "Tezz Low", colorway: "Kirana Cream", price: "₹10,499", accent: "#22c55e" },
-  { name: "Udaan Mid", colorway: "Flyover Grey", price: "₹13,999", accent: "#ec4899", badge: "Drop 001" },
-];
+const FEATURED = PRODUCTS.slice(0, 3);
 
 export function FeaturedDrop() {
   const reducedMotion = useReducedMotion();
@@ -55,8 +52,8 @@ export function FeaturedDrop() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {PRODUCTS.map((product) => (
-            <ProductCard key={product.name} {...product} />
+          {FEATURED.map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>

@@ -132,25 +132,36 @@ export function SneakerViewer() {
   );
 }
 
-function SneakerSilhouette() {
+export function SneakerSilhouette({
+  accent,
+  className,
+}: {
+  accent?: string;
+  className?: string;
+}) {
+  const gradientId = `soleGradient-${accent ? accent.replace("#", "") : "default"}`;
+
   return (
-    <svg viewBox="0 0 420 240" className="h-auto w-[340px] drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] md:w-[420px]">
+    <svg
+      viewBox="0 0 420 240"
+      className={className ?? "h-auto w-[340px] drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] md:w-[420px]"}
+    >
       <defs>
         <linearGradient id="upperGradient" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="#f9fafb" />
           <stop offset="55%" stopColor="#cbd5e1" />
           <stop offset="100%" stopColor="#64748b" />
         </linearGradient>
-        <linearGradient id="soleGradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="#38bdf8" />
-          <stop offset="100%" stopColor="#22c55e" />
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor={accent ?? "#38bdf8"} />
+          <stop offset="100%" stopColor={accent ?? "#22c55e"} />
         </linearGradient>
       </defs>
 
       {/* sole */}
       <path
         d="M45,185 C40,205 60,215 95,214 L360,208 C395,206 405,190 392,175 L40,178 Z"
-        fill="url(#soleGradient)"
+        fill={`url(#${gradientId})`}
         opacity="0.9"
       />
 
@@ -191,7 +202,7 @@ function SneakerSilhouette() {
       <path
         d="M95,150 C160,168 260,170 340,152"
         fill="none"
-        stroke="url(#soleGradient)"
+        stroke={`url(#${gradientId})`}
         strokeWidth="6"
         strokeLinecap="round"
         opacity="0.85"

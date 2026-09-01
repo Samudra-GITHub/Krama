@@ -1,15 +1,21 @@
 "use client";
 
+import Link from "next/link";
 import { Heart } from "lucide-react";
+import { clsx } from "clsx";
 import type { Product } from "@/lib/products";
+import { useWishlistStore } from "@/lib/store/wishlist";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
 export function ProductCard({ product }: { product: Product }) {
-  const { name, colorway, price, accent, badge } = product;
+  const { name, colorway, price, accent, badge, slug, id } = product;
+  const wishlisted = useWishlistStore((s) => s.ids.has(id));
+  const toggleWishlist = useWishlistStore((s) => s.toggle);
 
   return (
-    <div
+    <Link
+      href={`/product/${slug}`}
       data-cursor="interactive"
       className="product-card group relative flex flex-col overflow-hidden rounded-glass bg-krama-surface"
     >
@@ -24,9 +30,16 @@ export function ProductCard({ product }: { product: Product }) {
         )}
         <button
           aria-label="Add to wishlist"
-          className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-pill bg-krama-surface/90 text-krama-text-dark opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          onClick={(e) => {
+            e.preventDefault();
+            toggleWishlist(id);
+          }}
+          className={clsx(
+            "absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-pill bg-krama-surface/90 text-krama-text-dark opacity-0 transition-opacity duration-300 group-hover:opacity-100",
+            wishlisted && "!opacity-100 text-krama-danger"
+          )}
         >
-          <Heart size={15} strokeWidth={1.5} />
+          <Heart size={15} strokeWidth={1.5} fill={wishlisted ? "currentColor" : "none"} />
         </button>
         <svg
           viewBox="0 0 420 240"
@@ -55,6 +68,6 @@ export function ProductCard({ product }: { product: Product }) {
           {formatPrice(price)}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }

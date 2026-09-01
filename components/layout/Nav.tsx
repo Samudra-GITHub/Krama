@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Search, Heart, ShoppingBag, User, Menu } from "lucide-react";
+import { useCartStore, selectCartCount } from "@/lib/store/cart";
 
 const LINKS = [
   { label: "Shop", href: "/shop" },
@@ -14,6 +15,8 @@ const LINKS = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const cartCount = useCartStore(selectCartCount);
+  const openCart = useCartStore((s) => s.open);
 
   useEffect(() => {
     function onScroll() {
@@ -69,12 +72,15 @@ export function Nav() {
         <button
           data-cursor="interactive"
           aria-label="Cart"
+          onClick={openCart}
           className="relative text-krama-text-primary/80 transition-colors hover:text-krama-accent-alt"
         >
           <ShoppingBag size={19} strokeWidth={1.5} />
-          <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-pill bg-krama-accent text-[10px] font-semibold text-[#04150a]">
-            2
-          </span>
+          {cartCount > 0 && (
+            <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-pill bg-krama-accent text-[10px] font-semibold text-[#04150a]">
+              {cartCount}
+            </span>
+          )}
         </button>
         <button
           data-cursor="interactive"

@@ -1,26 +1,241 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Background */
+  --krama-bg: #030712;
+  --krama-bg-alt: #0f172a;
+
+  /* Surface */
+  --krama-surface: #ffffff;
+  --krama-surface-subtle: #f9fafb;
+
+  /* Glass */
+  --krama-glass-light: rgba(255, 255, 255, 0.12);
+  --krama-glass-light-strong: rgba(255, 255, 255, 0.2);
+  --krama-glass-dark: rgba(17, 25, 40, 0.55);
+
+  /* Accent */
+  --krama-accent: #22c55e;
+  --krama-accent-alt: #38bdf8;
+
+  /* Status */
+  --krama-success: #16a34a;
+  --krama-danger: #ef4444;
+  --krama-warning: #f97316;
+
+  /* Text */
+  --krama-text-primary: #f9fafb;
+  --krama-text-dark: #111827;
+  --krama-text-muted: #6b7280;
+
+  /* Border */
+  --krama-border-glass: rgba(255, 255, 255, 0.25);
+  --krama-border-subtle: rgba(148, 163, 184, 0.6);
+
+  /* Shadow / Glow */
+  --krama-shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --krama-shadow-soft: 0 4px 16px rgba(15, 23, 42, 0.35);
+  --krama-glow-accent: 0 0 32px rgba(34, 197, 94, 0.45);
+
+  /* Gradients */
+  --krama-gradient-hero: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+  --krama-gradient-tech: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-krama-bg: var(--krama-bg);
+  --color-krama-bg-alt: var(--krama-bg-alt);
+  --color-krama-surface: var(--krama-surface);
+  --color-krama-surface-subtle: var(--krama-surface-subtle);
+  --color-krama-glass-light: var(--krama-glass-light);
+  --color-krama-glass-dark: var(--krama-glass-dark);
+  --color-krama-accent: var(--krama-accent);
+  --color-krama-accent-alt: var(--krama-accent-alt);
+  --color-krama-success: var(--krama-success);
+  --color-krama-danger: var(--krama-danger);
+  --color-krama-warning: var(--krama-warning);
+  --color-krama-text-primary: var(--krama-text-primary);
+  --color-krama-text-dark: var(--krama-text-dark);
+  --color-krama-text-muted: var(--krama-text-muted);
+  --color-krama-border-glass: var(--krama-border-glass);
+  --color-krama-border-subtle: var(--krama-border-subtle);
+
+  --font-display: var(--font-syne);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  --shadow-krama-glass: var(--krama-shadow-glass);
+  --shadow-krama-soft: var(--krama-shadow-soft);
+
+  --radius-glass: 1rem;
+  --radius-pill: 9999px;
+
+  --animate-hero-fade-in: hero-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-ring-spin: ring-spin 18s linear infinite;
+  --animate-cursor-halo: cursor-halo 0.6s ease-out infinite;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
+@keyframes ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cursor-halo {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.9;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+}
+
+body {
+  background: var(--krama-bg);
+  color: var(--krama-text-primary);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--krama-accent);
+  color: #04150a;
+}
+
+/* ---------- Glassmorphism ---------- */
+
+.glass-card {
+  background: var(--krama-glass-light);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid var(--krama-border-glass);
+  border-radius: var(--radius-glass);
+  box-shadow: var(--krama-shadow-glass);
+}
+
+.glass-nav {
+  background: var(--krama-glass-dark);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-hero-tile {
+  background: var(--krama-glass-light);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--krama-border-glass);
+  border-radius: var(--radius-glass);
+  box-shadow: var(--krama-shadow-glass);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-card,
+  .glass-hero-tile {
+    background: rgba(15, 23, 42, 0.92);
+  }
+  .glass-nav {
+    background: rgba(10, 14, 26, 0.96);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass-card,
+  .glass-hero-tile {
+    background: #0f172a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .glass-nav {
+    background: #0a0e1a;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* ---------- Glow ---------- */
+
+.glow-accent {
+  box-shadow: var(--krama-glow-accent);
+}
+
+/* ---------- Noise grain overlay ---------- */
+
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.1;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- Typography helpers ---------- */
+
+.tracking-meta {
+  letter-spacing: 0.08em;
+}
+
+.tracking-label {
+  letter-spacing: 0.1em;
+}
+
+/* ---------- Cursor ---------- */
+
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
+@media (pointer: coarse) {
+  .cursor-none,
+  .cursor-none * {
+    cursor: auto !important;
+  }
+}
+
+/* ---------- Motion accessibility ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Focus ---------- */
+
+:focus-visible {
+  outline: 2px solid var(--krama-accent-alt);
+  outline-offset: 3px;
 }

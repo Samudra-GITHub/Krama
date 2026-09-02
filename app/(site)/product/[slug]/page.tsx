@@ -66,7 +66,7 @@ export default async function ProductPage({
       <Nav />
       <main className="min-h-screen bg-krama-bg pt-20 pb-24 lg:pb-0">
         <ProductView product={product} />
-        <DetailSections />
+        <DetailSections productId={product.id} />
       </main>
       <Footer />
     </>

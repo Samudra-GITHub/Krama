@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { X, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
@@ -7,6 +8,7 @@ import { useCartStore, selectCartTotal } from "@/lib/store/cart";
 import { SneakerSilhouette } from "@/components/3d/SneakerViewer";
 import { Button } from "@/components/ui/Button";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 const FREE_SHIPPING_THRESHOLD = 15000;
@@ -19,6 +21,22 @@ export function CartDrawer() {
   const updateQuantity = useCartStore((s) => s.updateQuantity);
   const subtotal = useCartStore(selectCartTotal);
   const reducedMotion = useReducedMotion();
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(isOpen, drawerRef);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape") close();
+    }
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [isOpen, close]);
 
   const shipping = subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : 199;
 
@@ -36,6 +54,7 @@ export function CartDrawer() {
           />
 
           <motion.aside
+            ref={drawerRef}
             role="dialog"
             aria-modal="true"
             aria-label="Cart"

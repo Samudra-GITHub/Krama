@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 interface ModalProps {
   open: boolean;
@@ -15,6 +16,9 @@ interface ModalProps {
 
 export function Modal({ open, onClose, title, children }: ModalProps) {
   const reducedMotion = useReducedMotion();
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(open, dialogRef);
 
   useEffect(() => {
     if (!open) return;
@@ -44,6 +48,7 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
             onClick={onClose}
           />
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-label={title}

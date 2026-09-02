@@ -8,6 +8,7 @@ import { Search, X } from "lucide-react";
 import { useSearchStore } from "@/lib/store/search";
 import { PRODUCTS } from "@/lib/products";
 import { useReducedMotion } from "@/lib/useReducedMotion";
+import { useFocusTrap } from "@/lib/useFocusTrap";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
@@ -17,6 +18,9 @@ export function SearchOverlay() {
   const reducedMotion = useReducedMotion();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(isOpen, panelRef);
 
   const results = useMemo(() => {
     if (!query.trim()) return [];
@@ -28,17 +32,15 @@ export function SearchOverlay() {
 
   useEffect(() => {
     if (!isOpen) return;
-    setQuery("");
-    const timer = setTimeout(() => inputRef.current?.focus(), 100);
     function handleKey(e: KeyboardEvent) {
       if (e.key === "Escape") close();
     }
     document.addEventListener("keydown", handleKey);
     document.body.style.overflow = "hidden";
     return () => {
-      clearTimeout(timer);
       document.removeEventListener("keydown", handleKey);
       document.body.style.overflow = "";
+      setQuery("");
     };
   }, [isOpen, close]);
 
@@ -58,6 +60,7 @@ export function SearchOverlay() {
           />
 
           <motion.div
+            ref={panelRef}
             className="glass-hero-tile relative z-10 w-full max-w-xl overflow-hidden"
             initial={{ opacity: 0, y: reducedMotion ? 0 : -20 }}
             animate={{ opacity: 1, y: 0 }}

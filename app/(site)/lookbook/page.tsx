@@ -39,7 +39,7 @@ export default function LookbookPage() {
   useGSAP(
     () => {
       if (reducedMotion) return;
-      gsap.utils.toArray<HTMLElement>(".lookbook-chapter").forEach((el, i) => {
+      gsap.utils.toArray<HTMLElement>(".lookbook-chapter").forEach((el) => {
         gsap.fromTo(
           el,
           { opacity: 0, y: 48 },

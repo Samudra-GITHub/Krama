@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { Search, Heart, ShoppingBag, User, Menu, X } from "lucide-react";
+import { Search, Heart, ShoppingBag, User, Menu, X, Zap } from "lucide-react";
 import { useCartStore, selectCartCount } from "@/lib/store/cart";
 import { useSearchStore } from "@/lib/store/search";
 import { useReducedMotion } from "@/lib/useReducedMotion";
@@ -62,6 +62,14 @@ export function Nav() {
         </nav>
 
         <div className="flex items-center gap-5">
+          <Link
+            href="/drops/strato"
+            data-cursor="interactive"
+            className="hidden items-center gap-1.5 rounded-pill border border-[#9fb8ff]/40 bg-[#9fb8ff]/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-label text-[#9fb8ff] transition-colors hover:bg-[#9fb8ff]/20 lg:flex"
+          >
+            <Zap size={12} />
+            Strato — Free
+          </Link>
           <button
             data-cursor="interactive"
             aria-label="Search"
@@ -119,6 +127,15 @@ export function Nav() {
             exit={{ opacity: 0, y: reducedMotion ? 0 : -16 }}
             transition={{ duration: reducedMotion ? 0 : 0.25, ease: [0.16, 1, 0.3, 1] }}
           >
+            <Link
+              href="/drops/strato"
+              data-cursor="interactive"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-1.5 border-b border-white/5 py-4 text-sm font-semibold uppercase tracking-meta text-[#9fb8ff]"
+            >
+              <Zap size={14} />
+              Strato — Free Drop
+            </Link>
             {LINKS.map((link) => (
               <Link
                 key={link.href}

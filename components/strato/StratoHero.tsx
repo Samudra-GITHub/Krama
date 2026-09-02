@@ -1,8 +1,11 @@
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowRight, Rotate3d, MousePointer2 } from "lucide-react";
 import { useReducedMotion, useCoarsePointer } from "@/lib/useReducedMotion";
+import { useCartStore } from "@/lib/store/cart";
+import { STRATO_PRODUCT } from "@/lib/products";
 import { useStratoMotion } from "./useStratoMotion";
 import { TurntableRing } from "./TurntableRing";
 import { StratoNav } from "./StratoNav";
@@ -13,6 +16,13 @@ const VIDEO_URL =
 export function StratoHero() {
   const reducedMotion = useReducedMotion();
   const coarsePointer = useCoarsePointer();
+  const router = useRouter();
+  const addItem = useCartStore((s) => s.addItem);
+
+  function claimYours() {
+    addItem({ product: STRATO_PRODUCT, size: 9, color: STRATO_PRODUCT.colorway });
+    router.push("/checkout");
+  }
 
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -68,7 +78,7 @@ export function StratoHero() {
         className="pointer-events-none absolute left-1/2 top-[62%] z-[3] h-8 w-[38vmin] -translate-x-1/2 rounded-full bg-black/50 blur-2xl"
       />
 
-      <StratoNav />
+      <StratoNav onClaim={claimYours} />
 
       <div className="relative z-10 flex max-w-4xl flex-1 flex-col justify-end px-4 pb-12 sm:px-6 md:px-12 md:pb-20">
         <div
@@ -101,6 +111,8 @@ export function StratoHero() {
 
         <div className="flex flex-wrap gap-3 sm:gap-4">
           <button
+            onClick={claimYours}
+            data-cursor="interactive"
             className="animate-blur-fade-up flex items-center gap-2 rounded-full bg-[#9fb8ff] px-7 py-3 font-semibold text-black transition-colors hover:bg-[#b6c9ff] motion-safe:animate-[freePop_2.4s_ease-in-out_infinite]"
             style={{ animationDelay: "640ms" }}
           >

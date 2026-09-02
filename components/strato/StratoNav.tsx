@@ -6,7 +6,7 @@ import { clsx } from "clsx";
 
 const LINKS = ["The Shoe", "Sizing", "The Drop", "Lookbook"];
 
-export function StratoNav() {
+export function StratoNav({ onClaim }: { onClaim: () => void }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -32,6 +32,7 @@ export function StratoNav() {
       </div>
 
       <button
+        onClick={onClaim}
         className="animate-blur-fade-up accent-glass hidden items-center gap-2 rounded-full px-5 py-2 font-mono text-xs uppercase text-white lg:flex"
         style={{ animationDelay: "300ms" }}
       >
@@ -72,7 +73,13 @@ export function StratoNav() {
               {link}
             </a>
           ))}
-          <button className="accent-glass mt-3 flex items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-xs uppercase text-white">
+          <button
+            onClick={() => {
+              setMenuOpen(false);
+              onClaim();
+            }}
+            className="accent-glass mt-3 flex items-center justify-center gap-2 rounded-full px-5 py-3 font-mono text-xs uppercase text-white"
+          >
             <Zap size={16} />
             Claim yours
           </button>

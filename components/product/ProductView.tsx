@@ -214,7 +214,7 @@ export function ProductView({ product }: { product: Product }) {
       {/* sticky mobile CTA */}
       <div
         className={clsx(
-          "glass-nav fixed inset-x-0 bottom-0 z-40 flex items-center justify-between px-6 py-4 transition-transform duration-300 lg:hidden",
+          "glass-nav fixed inset-x-0 bottom-16 z-40 flex items-center justify-between px-6 py-4 transition-transform duration-300 lg:hidden",
           stickyVisible ? "translate-y-0" : "translate-y-full"
         )}
       >

@@ -13,22 +13,6 @@ export interface Product {
 
 export const ALL_SIZES = [7, 8, 9, 9.5, 10, 10.5, 11];
 
-/**
- * Not part of the main catalog (kept out of PRODUCTS/shop filtering) —
- * used only by the /drops/strato hype page's "Claim yours" flow.
- */
-export const STRATO_PRODUCT: Product = {
-  id: "strato-001",
-  slug: "strato-001-ice",
-  name: "Strato 001",
-  colorway: "Ice",
-  price: 0,
-  accent: "#9fb8ff",
-  badge: "Free",
-  category: "Low",
-  sizes: [7, 8, 9, 9.5, 10, 10.5, 11],
-};
-
 export const COLORS = [
   { name: "Gully Haze", hex: "#9fb8ff" },
   { name: "Kirana Cream", hex: "#c7d4f5" },

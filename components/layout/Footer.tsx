@@ -19,9 +19,33 @@ export function Footer() {
         </div>
 
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-          <FooterColumn title="Shop" links={["New Arrivals", "Sneakers", "Apparel", "Accessories"]} />
-          <FooterColumn title="Brand" links={["Lookbook", "Journal", "Community", "Careers"]} />
-          <FooterColumn title="Support" links={["Size Guide", "Returns", "Contact", "Store Locator"]} />
+          <FooterColumn
+            title="Shop"
+            links={[
+              { label: "New Arrivals", href: "/shop" },
+              { label: "Sneakers", href: "/shop" },
+              { label: "Collections", href: "/collections" },
+              { label: "Wishlist", href: "/account?tab=wishlist" },
+            ]}
+          />
+          <FooterColumn
+            title="Brand"
+            links={[
+              { label: "Lookbook", href: "/lookbook" },
+              { label: "Journal", href: "/journal" },
+              { label: "Community", href: "/community" },
+              { label: "Careers", href: "#" },
+            ]}
+          />
+          <FooterColumn
+            title="Support"
+            links={[
+              { label: "Size Guide", href: "#" },
+              { label: "Returns", href: "#" },
+              { label: "Contact", href: "#" },
+              { label: "Store Locator", href: "#" },
+            ]}
+          />
         </div>
 
         <div className="flex flex-col gap-3">
@@ -88,18 +112,24 @@ function NewsletterForm() {
   );
 }
 
-function FooterColumn({ title, links }: { title: string; links: string[] }) {
+function FooterColumn({
+  title,
+  links,
+}: {
+  title: string;
+  links: { label: string; href: string }[];
+}) {
   return (
     <div className="flex flex-col gap-3">
       <span className="text-xs uppercase tracking-label text-krama-text-primary/40">{title}</span>
       {links.map((link) => (
         <Link
-          key={link}
-          href="#"
+          key={link.label}
+          href={link.href}
           data-cursor="interactive"
           className="text-sm text-krama-text-primary/70 transition-colors hover:text-krama-text-primary"
         >
-          {link}
+          {link.label}
         </Link>
       ))}
     </div>

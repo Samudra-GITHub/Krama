@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Heart, Minus, Plus, Ruler } from "lucide-react";
 import { clsx } from "clsx";
+import Link from "next/link";
 import type { Product } from "@/lib/products";
 import { PRODUCTS } from "@/lib/products";
+import { COLLECTIONS } from "@/lib/collections";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { SizeChip } from "@/components/ui/SizeChip";
 import { Rating } from "@/components/ui/Rating";
@@ -44,6 +46,7 @@ export function ProductView({ product }: { product: Product }) {
   const ctaRef = useRef<HTMLDivElement>(null);
 
   const variants = PRODUCTS.filter((p) => p.name === product.name);
+  const collection = COLLECTIONS.find((c) => c.productName === product.name);
 
   useEffect(() => {
     if (!ctaRef.current) return;
@@ -204,13 +207,13 @@ export function ProductView({ product }: { product: Product }) {
             </button>
           </div>
 
-          <a
-            href="/lookbook"
+          <Link
+            href={collection ? `/collections/${collection.slug}` : "/lookbook"}
             data-cursor="interactive"
             className="w-fit text-xs uppercase tracking-label text-krama-text-primary/50 underline decoration-krama-border-glass underline-offset-4 transition-colors hover:text-krama-accent-alt"
           >
             View in Lookbook
-          </a>
+          </Link>
         </div>
       </div>
 

@@ -1,5 +1,5 @@
 import { Nav } from "@/components/layout/Nav";
-import { Hero } from "@/components/layout/Hero";
+import { CampaignHero } from "@/components/layout/CampaignHero";
 import { FeaturedDrop } from "@/components/layout/FeaturedDrop";
 import { Footer } from "@/components/layout/Footer";
 
@@ -8,7 +8,7 @@ export default function Home() {
     <>
       <Nav />
       <main>
-        <Hero />
+        <CampaignHero />
         <FeaturedDrop />
       </main>
       <Footer />

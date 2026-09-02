@@ -74,6 +74,9 @@
   --animate-ring-spin: ring-spin 18s linear infinite;
   --animate-cursor-halo: cursor-halo 0.6s ease-out infinite;
   --animate-free-pop: free-pop 2.4s ease-in-out infinite;
+  --animate-slow-push: slow-push 20s ease-in-out infinite alternate;
+  --animate-pulse-dot: pulse-dot 1.4s ease-in-out infinite;
+  --animate-blur-fade-up: blur-fade-up 0.9s ease-out forwards;
 }
 
 @keyframes hero-fade-in {
@@ -115,6 +118,40 @@
   }
   50% {
     transform: scale(1.06);
+  }
+}
+
+@keyframes slow-push {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes blur-fade-up {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
@@ -246,6 +283,18 @@ body {
 
 .tracking-label {
   letter-spacing: 0.1em;
+}
+
+.animate-blur-fade-up {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blur-fade-up {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
 }
 
 /* ---------- Cursor ---------- */

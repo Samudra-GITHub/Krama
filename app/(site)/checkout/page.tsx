@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { Stepper } from "@/components/checkout/Stepper";
 import { Field } from "@/components/checkout/Field";
 import { useCartStore, selectCartTotal } from "@/lib/store/cart";
+import { useOrdersStore } from "@/lib/store/orders";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
@@ -40,6 +41,7 @@ const EMPTY_SHIPPING: ShippingForm = {
 export default function CheckoutPage() {
   const items = useCartStore((s) => s.items);
   const subtotal = useCartStore(selectCartTotal);
+  const addOrder = useOrdersStore((s) => s.addOrder);
 
   const [step, setStep] = useState(0);
   const [placed, setPlaced] = useState(false);
@@ -82,11 +84,17 @@ export default function CheckoutPage() {
   }
 
   function handlePlaceOrder() {
-    setOrderSummary({
-      count: items.reduce((sum, i) => sum + i.quantity, 0),
+    const orderId = `KR${Math.floor(100000 + Math.random() * 900000)}`;
+    const count = items.reduce((sum, i) => sum + i.quantity, 0);
+
+    addOrder({
+      id: orderId,
+      date: new Date().toISOString(),
+      status: "Processing",
+      items: count,
       total,
-      orderId: `KR${Math.floor(100000 + Math.random() * 900000)}`,
     });
+    setOrderSummary({ count, total, orderId });
     setPlaced(true);
     useCartStore.setState({ items: [] });
   }

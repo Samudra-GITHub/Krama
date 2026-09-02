@@ -7,8 +7,9 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { AdminSidebar, type AdminSection } from "@/components/admin/AdminSidebar";
 import { useToastStore } from "@/lib/store/toast";
+import { useOrdersStore } from "@/lib/store/orders";
 import { PRODUCTS as INITIAL_PRODUCTS, type Product } from "@/lib/products";
-import { ORDERS as INITIAL_ORDERS, type Order } from "@/lib/orders";
+import { type Order } from "@/lib/orders";
 import { DROPS as INITIAL_DROPS, ANALYTICS, type Drop } from "@/lib/drops";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
@@ -211,11 +212,12 @@ function ProductsSection() {
 }
 
 function OrdersSection() {
-  const [orders, setOrders] = useState<Order[]>(INITIAL_ORDERS);
+  const orders = useOrdersStore((s) => s.orders);
+  const updateOrderStatus = useOrdersStore((s) => s.updateStatus);
   const pushToast = useToastStore((s) => s.push);
 
   function updateStatus(id: string, status: Order["status"]) {
-    setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status } : o)));
+    updateOrderStatus(id, status);
     pushToast(`Order ${id} marked ${status}`, "success");
   }
 

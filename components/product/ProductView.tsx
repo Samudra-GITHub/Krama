@@ -29,7 +29,7 @@ const SIZE_CHART = [
 export function ProductView({ product }: { product: Product }) {
   const router = useRouter();
   const addItem = useCartStore((s) => s.addItem);
-  const wishlisted = useWishlistStore((s) => s.ids.has(product.id));
+  const wishlisted = useWishlistStore((s) => s.ids.includes(product.id));
   const toggleWishlist = useWishlistStore((s) => s.toggle);
   const pushToast = useToastStore((s) => s.push);
 

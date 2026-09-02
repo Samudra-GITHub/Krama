@@ -7,6 +7,7 @@ import { CartDrawer } from "@/components/layout/CartDrawer";
 import { Toaster } from "@/components/ui/Toaster";
 import { MobileNav } from "@/components/layout/MobileNav";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
+import { StoreHydration } from "@/components/motion/StoreHydration";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="min-h-full bg-krama-bg font-body text-krama-text-primary">
         <SmoothScroll>
+          <StoreHydration />
           <CustomCursor />
           <div className="pb-16 lg:pb-0">{children}</div>
           <MobileNav />

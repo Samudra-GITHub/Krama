@@ -12,8 +12,9 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { AccountSidebar, type AccountSection } from "@/components/account/AccountSidebar";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import { useToastStore } from "@/lib/store/toast";
+import { useOrdersStore } from "@/lib/store/orders";
 import { PRODUCTS } from "@/lib/products";
-import { ORDERS, ADDRESSES } from "@/lib/orders";
+import { ADDRESSES } from "@/lib/orders";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
@@ -117,7 +118,9 @@ function ProfileSection() {
 }
 
 function OrdersSection({ onShop }: { onShop: () => void }) {
-  if (ORDERS.length === 0) {
+  const orders = useOrdersStore((s) => s.orders);
+
+  if (orders.length === 0) {
     return (
       <SectionCard title="Orders">
         <p className="text-sm text-krama-text-muted">You have no orders yet.</p>
@@ -128,7 +131,7 @@ function OrdersSection({ onShop }: { onShop: () => void }) {
   return (
     <SectionCard title="Orders">
       <div className="flex flex-col divide-y divide-krama-border-subtle">
-        {ORDERS.map((order) => (
+        {orders.map((order) => (
           <div key={order.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
             <div>
               <p className="font-mono text-sm text-krama-text-dark">{order.id}</p>
@@ -168,7 +171,7 @@ function OrdersSection({ onShop }: { onShop: () => void }) {
 
 function WishlistSection() {
   const ids = useWishlistStore((s) => s.ids);
-  const products = PRODUCTS.filter((p) => ids.has(p.id));
+  const products = PRODUCTS.filter((p) => ids.includes(p.id));
 
   if (products.length === 0) {
     return (

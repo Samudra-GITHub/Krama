@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist, createJSONStorage } from "zustand/middleware";
 import type { Product } from "@/lib/products";
 
 export interface CartItem {
@@ -18,36 +19,46 @@ interface CartState {
   updateQuantity: (index: number, quantity: number) => void;
 }
 
-export const useCartStore = create<CartState>((set) => ({
-  items: [],
-  isOpen: false,
-  open: () => set({ isOpen: true }),
-  close: () => set({ isOpen: false }),
-  addItem: (item, quantity = 1) =>
-    set((state) => {
-      const existingIndex = state.items.findIndex(
-        (i) =>
-          i.product.id === item.product.id &&
-          i.size === item.size &&
-          i.color === item.color
-      );
-      if (existingIndex > -1) {
-        const items = [...state.items];
-        items[existingIndex] = {
-          ...items[existingIndex],
-          quantity: items[existingIndex].quantity + quantity,
-        };
-        return { items, isOpen: true };
-      }
-      return { items: [...state.items, { ...item, quantity }], isOpen: true };
+export const useCartStore = create<CartState>()(
+  persist(
+    (set) => ({
+      items: [],
+      isOpen: false,
+      open: () => set({ isOpen: true }),
+      close: () => set({ isOpen: false }),
+      addItem: (item, quantity = 1) =>
+        set((state) => {
+          const existingIndex = state.items.findIndex(
+            (i) =>
+              i.product.id === item.product.id &&
+              i.size === item.size &&
+              i.color === item.color
+          );
+          if (existingIndex > -1) {
+            const items = [...state.items];
+            items[existingIndex] = {
+              ...items[existingIndex],
+              quantity: items[existingIndex].quantity + quantity,
+            };
+            return { items, isOpen: true };
+          }
+          return { items: [...state.items, { ...item, quantity }], isOpen: true };
+        }),
+      removeItem: (index) =>
+        set((state) => ({ items: state.items.filter((_, i) => i !== index) })),
+      updateQuantity: (index, quantity) =>
+        set((state) => ({
+          items: state.items.map((item, i) => (i === index ? { ...item, quantity } : item)),
+        })),
     }),
-  removeItem: (index) =>
-    set((state) => ({ items: state.items.filter((_, i) => i !== index) })),
-  updateQuantity: (index, quantity) =>
-    set((state) => ({
-      items: state.items.map((item, i) => (i === index ? { ...item, quantity } : item)),
-    })),
-}));
+    {
+      name: "krama-cart",
+      storage: createJSONStorage(() => localStorage),
+      skipHydration: true,
+      partialize: (state) => ({ items: state.items }),
+    }
+  )
+);
 
 export const selectCartCount = (state: CartState) =>
   state.items.reduce((sum, item) => sum + item.quantity, 0);

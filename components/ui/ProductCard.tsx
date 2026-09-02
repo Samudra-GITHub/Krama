@@ -11,7 +11,7 @@ const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
 export function ProductCard({ product }: { product: Product }) {
   const { name, colorway, price, accent, badge, slug, id } = product;
-  const wishlisted = useWishlistStore((s) => s.ids.has(id));
+  const wishlisted = useWishlistStore((s) => s.ids.includes(id));
   const toggleWishlist = useWishlistStore((s) => s.toggle);
   const pushToast = useToastStore((s) => s.push);
 

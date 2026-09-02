@@ -2,13 +2,16 @@
 
 import { Fragment, useState } from "react";
 import { clsx } from "clsx";
-import { Plus, Trash2, TrendingUp, DollarSign, ShoppingCart, Percent } from "lucide-react";
+import { Plus, Trash2, Pencil, TrendingUp, DollarSign, ShoppingCart, Percent } from "lucide-react";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { AdminSidebar, type AdminSection } from "@/components/admin/AdminSidebar";
+import { Modal } from "@/components/ui/Modal";
+import { Field } from "@/components/checkout/Field";
+import { Button } from "@/components/ui/Button";
 import { useToastStore } from "@/lib/store/toast";
 import { useOrdersStore } from "@/lib/store/orders";
-import { PRODUCTS as INITIAL_PRODUCTS, type Product } from "@/lib/products";
+import { PRODUCTS as INITIAL_PRODUCTS, CATEGORIES, type Product } from "@/lib/products";
 import { type Order } from "@/lib/orders";
 import { DROPS as INITIAL_DROPS, ANALYTICS, type Drop } from "@/lib/drops";
 
@@ -137,10 +140,17 @@ function DropsSection() {
 function ProductsSection() {
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const pushToast = useToastStore((s) => s.push);
+  const [editing, setEditing] = useState<Product | null>(null);
 
   function removeProduct(id: string) {
     setProducts((prev) => prev.filter((p) => p.id !== id));
     pushToast("Product removed", "info");
+  }
+
+  function saveEdit(updated: Product) {
+    setProducts((prev) => prev.map((p) => (p.id === updated.id ? updated : p)));
+    pushToast("Product updated", "success");
+    setEditing(null);
   }
 
   function addProduct() {
@@ -195,21 +205,107 @@ function ProductsSection() {
                   {formatPrice(product.price)}
                 </td>
                 <td className="py-3 text-right">
-                  <button
-                    data-cursor="interactive"
-                    aria-label="Remove product"
-                    onClick={() => removeProduct(product.id)}
-                    className="text-krama-text-muted transition-colors hover:text-krama-danger"
-                  >
-                    <Trash2 size={15} strokeWidth={1.5} />
-                  </button>
+                  <div className="flex items-center justify-end gap-3">
+                    <button
+                      data-cursor="interactive"
+                      aria-label="Edit product"
+                      onClick={() => setEditing(product)}
+                      className="text-krama-text-muted transition-colors hover:text-krama-text-dark"
+                    >
+                      <Pencil size={15} strokeWidth={1.5} />
+                    </button>
+                    <button
+                      data-cursor="interactive"
+                      aria-label="Remove product"
+                      onClick={() => removeProduct(product.id)}
+                      className="text-krama-text-muted transition-colors hover:text-krama-danger"
+                    >
+                      <Trash2 size={15} strokeWidth={1.5} />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+
+      <EditProductModal
+        key={editing?.id ?? "none"}
+        product={editing}
+        onClose={() => setEditing(null)}
+        onSave={saveEdit}
+      />
     </SectionCard>
+  );
+}
+
+function EditProductModal({
+  product,
+  onClose,
+  onSave,
+}: {
+  product: Product | null;
+  onClose: () => void;
+  onSave: (product: Product) => void;
+}) {
+  const [draft, setDraft] = useState<Product | null>(product);
+
+  if (!draft) return null;
+
+  return (
+    <Modal open={!!product} onClose={onClose} title="Edit Product">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          onSave(draft);
+        }}
+        className="flex flex-col gap-4"
+      >
+        <Field
+          label="Name"
+          value={draft.name}
+          onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+        />
+        <Field
+          label="Colorway"
+          value={draft.colorway}
+          onChange={(e) => setDraft({ ...draft, colorway: e.target.value })}
+        />
+        <div className="grid grid-cols-2 gap-4">
+          <Field
+            label="Price"
+            type="number"
+            value={draft.price}
+            onChange={(e) => setDraft({ ...draft, price: Number(e.target.value) })}
+          />
+          <label className="flex flex-col gap-1.5">
+            <span className="text-xs uppercase tracking-label text-krama-text-muted">
+              Category
+            </span>
+            <select
+              value={draft.category}
+              onChange={(e) => setDraft({ ...draft, category: e.target.value as Product["category"] })}
+              className="h-12 rounded-lg border border-krama-border-subtle bg-white px-4 text-sm text-krama-text-dark focus:border-krama-text-dark focus:outline-none"
+            >
+              {CATEGORIES.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+        <Field
+          label="Badge (optional)"
+          value={draft.badge ?? ""}
+          onChange={(e) => setDraft({ ...draft, badge: e.target.value || undefined })}
+        />
+        <Button type="submit" variant="primary" className="w-fit">
+          Save Changes
+        </Button>
+      </form>
+    </Modal>
   );
 }
 

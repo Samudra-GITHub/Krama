@@ -153,6 +153,8 @@ function ProductsSection() {
       accent: "#9fb8ff",
       category: "Low",
       sizes: [8, 9, 10],
+      rating: 0,
+      reviewCount: 0,
     };
     setProducts((prev) => [next, ...prev]);
     pushToast("Draft product created", "success");

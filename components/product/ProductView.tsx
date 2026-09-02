@@ -8,6 +8,7 @@ import type { Product } from "@/lib/products";
 import { PRODUCTS } from "@/lib/products";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { SizeChip } from "@/components/ui/SizeChip";
+import { Rating } from "@/components/ui/Rating";
 import { ColorSwatch } from "@/components/ui/ColorSwatch";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
@@ -85,6 +86,8 @@ export function ProductView({ product }: { product: Product }) {
               {product.colorway}
             </p>
           </div>
+
+          <Rating value={product.rating} count={product.reviewCount} />
 
           <p className="font-mono text-xl tabular-nums text-krama-text-primary">
             {formatPrice(product.price)}

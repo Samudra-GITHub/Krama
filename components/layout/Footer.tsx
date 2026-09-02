@@ -1,4 +1,9 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { Check } from "lucide-react";
+import { useToastStore } from "@/lib/store/toast";
 
 export function Footer() {
   return (
@@ -23,19 +28,7 @@ export function Footer() {
           <span className="text-xs uppercase tracking-label text-krama-text-primary/50">
             Get drop alerts
           </span>
-          <form className="flex items-center gap-2">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="h-11 w-56 rounded-pill border border-krama-border-glass bg-transparent px-4 text-sm text-krama-text-primary placeholder:text-krama-text-primary/40 focus:border-krama-accent-alt"
-            />
-            <button
-              type="submit"
-              className="h-11 rounded-pill bg-krama-accent px-5 text-xs font-semibold uppercase tracking-label text-black"
-            >
-              Join
-            </button>
-          </form>
+          <NewsletterForm />
         </div>
       </div>
 
@@ -44,6 +37,54 @@ export function Footer() {
         <span>Made in India.</span>
       </div>
     </footer>
+  );
+}
+
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const pushToast = useToastStore((s) => s.push);
+
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setError(true);
+      return;
+    }
+    setError(false);
+    setSubmitted(true);
+    pushToast("You're on the list for drop alerts", "success");
+    setEmail("");
+    setTimeout(() => setSubmitted(false), 2500);
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-1.5">
+      <div className="flex items-center gap-2">
+        <input
+          type="text"
+          inputMode="email"
+          autoComplete="email"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setError(false);
+          }}
+          placeholder="your@email.com"
+          disabled={submitted}
+          className="h-11 w-56 rounded-pill border border-krama-border-glass bg-transparent px-4 text-sm text-krama-text-primary placeholder:text-krama-text-primary/40 focus:border-krama-accent focus:outline-none disabled:opacity-60"
+        />
+        <button
+          type="submit"
+          data-cursor="interactive"
+          className="flex h-11 w-16 shrink-0 items-center justify-center rounded-pill bg-krama-accent text-xs font-semibold uppercase tracking-label text-black transition-transform active:scale-95"
+        >
+          {submitted ? <Check size={15} /> : "Join"}
+        </button>
+      </div>
+      {error && <span className="text-xs text-krama-danger">Enter a valid email address.</span>}
+    </form>
   );
 }
 

@@ -6,11 +6,12 @@ import { clsx } from "clsx";
 import type { Product } from "@/lib/products";
 import { useWishlistStore } from "@/lib/store/wishlist";
 import { useToastStore } from "@/lib/store/toast";
+import { Rating } from "@/components/ui/Rating";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
 export function ProductCard({ product }: { product: Product }) {
-  const { name, colorway, price, accent, badge, slug, id } = product;
+  const { name, colorway, price, accent, badge, slug, id, rating, reviewCount } = product;
   const wishlisted = useWishlistStore((s) => s.ids.includes(id));
   const toggleWishlist = useWishlistStore((s) => s.toggle);
   const pushToast = useToastStore((s) => s.push);
@@ -67,6 +68,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="flex flex-col gap-1 px-5 py-4">
         <h3 className="font-body text-sm font-medium text-krama-text-dark">{name}</h3>
         <p className="text-xs uppercase tracking-meta text-krama-text-muted">{colorway}</p>
+        <Rating value={rating} count={reviewCount} size={11} className="mt-0.5" />
         <p className="mt-1 font-mono text-sm tabular-nums text-krama-text-dark">
           {formatPrice(price)}
         </p>

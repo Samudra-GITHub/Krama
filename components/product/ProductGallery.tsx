@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { clsx } from "clsx";
 import { SneakerViewer, SneakerSilhouette } from "@/components/3d/SneakerViewer";
+import { Carousel } from "@/components/ui/Carousel";
 
 const TABS = ["3D", "Photos"] as const;
 type Tab = (typeof TABS)[number];
@@ -15,7 +16,6 @@ const PHOTO_SHOTS = [
 
 export function ProductGallery({ accent }: { accent: string }) {
   const [tab, setTab] = useState<Tab>("3D");
-  const [shotIndex, setShotIndex] = useState(0);
 
   return (
     <div className="flex flex-col gap-4">
@@ -37,41 +37,24 @@ export function ProductGallery({ accent }: { accent: string }) {
         ))}
       </div>
 
-      <div className="glass-hero-tile relative aspect-square w-full overflow-hidden">
-        {tab === "3D" ? (
+      {tab === "3D" ? (
+        <div className="glass-hero-tile relative aspect-square w-full overflow-hidden">
           <SneakerViewer />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center">
-            <SneakerSilhouette
-              accent={accent}
-              className={clsx(
-                "w-[70%] transition-transform duration-500 ease-out",
-                PHOTO_SHOTS[shotIndex].rotate,
-                PHOTO_SHOTS[shotIndex].scale
-              )}
-            />
-          </div>
-        )}
-      </div>
-
-      {tab === "Photos" && (
-        <div className="flex items-center gap-3">
-          {PHOTO_SHOTS.map((shot, i) => (
-            <button
-              key={shot.label}
-              data-cursor="interactive"
-              onClick={() => setShotIndex(i)}
-              className={clsx(
-                "flex-1 rounded-glass border px-3 py-3 text-center text-[11px] uppercase tracking-label transition-colors duration-200",
-                shotIndex === i
-                  ? "border-krama-accent-alt text-krama-text-primary"
-                  : "border-krama-border-glass text-krama-text-primary/50 hover:text-krama-text-primary/80"
-              )}
-            >
-              {shot.label}
-            </button>
-          ))}
         </div>
+      ) : (
+        <Carousel>
+          {PHOTO_SHOTS.map((shot) => (
+            <div
+              key={shot.label}
+              className="glass-hero-tile relative flex aspect-square w-full items-center justify-center overflow-hidden"
+            >
+              <SneakerSilhouette accent={accent} className={clsx("w-[70%]", shot.rotate, shot.scale)} />
+              <span className="absolute bottom-4 left-1/2 -translate-x-1/2 rounded-pill bg-black/40 px-3 py-1 text-[10px] uppercase tracking-label text-krama-text-primary/80">
+                {shot.label}
+              </span>
+            </div>
+          ))}
+        </Carousel>
       )}
     </div>
   );

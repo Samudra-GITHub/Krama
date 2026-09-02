@@ -9,6 +9,8 @@ export interface Product {
   category: "Runner" | "Low" | "Mid" | "High";
   sizes: number[];
   soldOutSizes?: number[];
+  rating: number;
+  reviewCount: number;
 }
 
 export const ALL_SIZES = [7, 8, 9, 9.5, 10, 10.5, 11];
@@ -34,6 +36,8 @@ export const PRODUCTS: Product[] = [
     badge: "New",
     category: "Runner",
     sizes: [7, 8, 9, 9.5, 10, 10.5, 11],
+    rating: 4.8,
+    reviewCount: 132,
   },
   {
     id: "p2",
@@ -45,6 +49,8 @@ export const PRODUCTS: Product[] = [
     category: "Low",
     sizes: [7, 8, 9, 10, 11],
     soldOutSizes: [8],
+    rating: 4.5,
+    reviewCount: 87,
   },
   {
     id: "p3",
@@ -56,6 +62,8 @@ export const PRODUCTS: Product[] = [
     badge: "Drop 001",
     category: "Mid",
     sizes: [8, 9, 9.5, 10, 11],
+    rating: 4.9,
+    reviewCount: 204,
   },
   {
     id: "p4",
@@ -66,6 +74,8 @@ export const PRODUCTS: Product[] = [
     accent: "#3d4a7a",
     category: "Runner",
     sizes: [7, 8, 9, 10],
+    rating: 4.7,
+    reviewCount: 96,
   },
   {
     id: "p5",
@@ -76,6 +86,8 @@ export const PRODUCTS: Product[] = [
     accent: "#1f2847",
     category: "High",
     sizes: [8, 9, 9.5, 10, 10.5, 11],
+    rating: 4.6,
+    reviewCount: 58,
   },
   {
     id: "p6",
@@ -86,6 +98,8 @@ export const PRODUCTS: Product[] = [
     accent: "#3d4a7a",
     category: "Low",
     sizes: [7, 7.5, 8, 9, 10],
+    rating: 4.4,
+    reviewCount: 41,
   },
   {
     id: "p7",
@@ -97,6 +111,8 @@ export const PRODUCTS: Product[] = [
     category: "Mid",
     sizes: [9, 9.5, 10, 11],
     soldOutSizes: [9.5],
+    rating: 4.9,
+    reviewCount: 168,
   },
   {
     id: "p8",
@@ -108,5 +124,7 @@ export const PRODUCTS: Product[] = [
     badge: "Almost Gone",
     category: "High",
     sizes: [7, 8, 9],
+    rating: 4.3,
+    reviewCount: 29,
   },
 ];

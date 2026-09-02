@@ -8,7 +8,7 @@ export interface CommunityPost {
   gradient: string;
 }
 
-const GRADIENTS = [
+export const GRADIENTS = [
   "linear-gradient(135deg, #3d4a7a 0%, #9fb8ff 100%)",
   "linear-gradient(135deg, #c7d4f5 0%, #9fb8ff 100%)",
   "linear-gradient(135deg, #6f84c9 0%, #3d4a7a 100%)",

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
@@ -8,6 +9,21 @@ import { PRODUCTS } from "@/lib/products";
 
 export function generateStaticParams() {
   return COLLECTIONS.map((c) => ({ slug: c.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const collection = COLLECTIONS.find((c) => c.slug === slug);
+  if (!collection) return {};
+
+  return {
+    title: `${collection.name} — KRAMA Collections`,
+    description: collection.tagline,
+  };
 }
 
 export default async function CollectionPage({

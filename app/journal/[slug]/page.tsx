@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Nav } from "@/components/layout/Nav";
@@ -6,6 +7,22 @@ import { ARTICLES } from "@/lib/journal";
 
 export function generateStaticParams() {
   return ARTICLES.map((a) => ({ slug: a.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = ARTICLES.find((a) => a.slug === slug);
+  if (!article) return {};
+
+  return {
+    title: `${article.title} — KRAMA Journal`,
+    description: article.excerpt,
+    openGraph: { title: article.title, description: article.excerpt },
+  };
 }
 
 function formatDate(iso: string) {
@@ -27,8 +44,21 @@ export default async function ArticlePage({
 
   const more = ARTICLES.filter((a) => a.slug !== slug).slice(0, 3);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.date,
+    author: { "@type": "Organization", name: "KRAMA" },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Nav />
       <main className="min-h-screen bg-krama-bg pt-20">
         <div

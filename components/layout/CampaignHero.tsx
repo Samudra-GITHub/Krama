@@ -10,7 +10,7 @@ const VIDEO_URL =
   "https://zxdefgavgwfxastwmmjm.supabase.co/storage/v1/object/public/assets/sub2.mp4";
 
 const STATS = [
-  { value: "10:00", label: "Platform Window", delay: 800 },
+  { value: "Krama 002", label: "Sequence No.", delay: 800 },
   { value: "Gully Haze", label: "Colorway", delay: 860 },
   { value: "12.09.26", label: "Release", delay: 920 },
 ];
@@ -112,16 +112,16 @@ export function CampaignHero() {
             className="animate-blur-fade-up mb-5 font-display text-4xl font-black uppercase leading-[0.92] tracking-[-0.03em] text-krama-text-primary sm:text-6xl md:text-7xl lg:text-[5.5rem]"
             style={{ animationDelay: "400ms" }}
           >
-            <span className="block">Ten Minutes.</span>
-            <span className="block">Not One Second More.</span>
+            <span className="block">Precision of the City.</span>
+            <span className="block">Chaos of the Gully.</span>
           </h1>
 
           <p
             className="animate-blur-fade-up mb-8 max-w-xl text-base text-white/60 sm:text-lg"
             style={{ animationDelay: "520ms" }}
           >
-            One sneaker, one deadline every commuter knows, and a city racing the clock
-            beside you.
+            Krama — the sequence, the step, the order found inside the noise. Built off
+            Mumbai&apos;s platforms and gullies, for a city that never walks the same line twice.
           </p>
 
           <div className="flex flex-wrap gap-3">

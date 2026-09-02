@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { clsx } from "clsx";
 import { Plus, Trash2, TrendingUp, DollarSign, ShoppingCart, Percent } from "lucide-react";
 import { Nav } from "@/components/layout/Nav";
@@ -217,6 +217,7 @@ function OrdersSection() {
   const orders = useOrdersStore((s) => s.orders);
   const updateOrderStatus = useOrdersStore((s) => s.updateStatus);
   const pushToast = useToastStore((s) => s.push);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   function updateStatus(id: string, status: Order["status"]) {
     updateOrderStatus(id, status);
@@ -236,34 +237,71 @@ function OrdersSection() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <tr key={order.id} className="border-b border-krama-border-subtle/60">
-                <td className="py-3 font-mono text-krama-text-dark">{order.id}</td>
-                <td className="py-3 text-krama-text-muted">
-                  {new Date(order.date).toLocaleDateString("en-IN", {
-                    day: "numeric",
-                    month: "short",
-                  })}
-                </td>
-                <td className="py-3 font-mono tabular-nums text-krama-text-dark">
-                  {formatPrice(order.total)}
-                </td>
-                <td className="py-3">
-                  <select
+            {orders.map((order) => {
+              const isOpen = expanded === order.id;
+              return (
+                <Fragment key={order.id}>
+                  <tr
+                    onClick={() => setExpanded(isOpen ? null : order.id)}
                     data-cursor="interactive"
-                    value={order.status}
-                    onChange={(e) => updateStatus(order.id, e.target.value as Order["status"])}
-                    className="rounded-pill border border-krama-border-subtle bg-white px-3 py-1 text-xs uppercase tracking-label text-krama-text-dark focus:border-krama-text-dark focus:outline-none"
+                    className="cursor-pointer border-b border-krama-border-subtle/60 hover:bg-krama-surface-subtle"
                   >
-                    {ORDER_STATUS_OPTIONS.map((status) => (
-                      <option key={status} value={status}>
-                        {status}
-                      </option>
-                    ))}
-                  </select>
-                </td>
-              </tr>
-            ))}
+                    <td className="py-3 font-mono text-krama-text-dark">{order.id}</td>
+                    <td className="py-3 text-krama-text-muted">
+                      {new Date(order.date).toLocaleDateString("en-IN", {
+                        day: "numeric",
+                        month: "short",
+                      })}
+                    </td>
+                    <td className="py-3 font-mono tabular-nums text-krama-text-dark">
+                      {formatPrice(order.total)}
+                    </td>
+                    <td className="py-3" onClick={(e) => e.stopPropagation()}>
+                      <select
+                        data-cursor="interactive"
+                        value={order.status}
+                        onChange={(e) => updateStatus(order.id, e.target.value as Order["status"])}
+                        className="rounded-pill border border-krama-border-subtle bg-white px-3 py-1 text-xs uppercase tracking-label text-krama-text-dark focus:border-krama-text-dark focus:outline-none"
+                      >
+                        {ORDER_STATUS_OPTIONS.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                  </tr>
+                  {isOpen && (
+                    <tr className="border-b border-krama-border-subtle/60 bg-krama-surface-subtle">
+                      <td colSpan={4} className="px-2 py-4">
+                        <div className="flex flex-col gap-2">
+                          {order.lineItems?.map((item, i) => (
+                            <div key={i} className="flex justify-between text-krama-text-dark">
+                              <span>
+                                {item.name} ({item.colorway}, {item.size}) × {item.quantity}
+                              </span>
+                              <span className="font-mono tabular-nums">
+                                {formatPrice(item.price * item.quantity)}
+                              </span>
+                            </div>
+                          ))}
+                          {order.shippingAddress && (
+                            <p className="text-xs text-krama-text-muted">
+                              Shipped to {order.shippingAddress}
+                            </p>
+                          )}
+                          {order.paymentMethod && (
+                            <p className="text-xs text-krama-text-muted">
+                              Paid via {order.paymentMethod}
+                            </p>
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              );
+            })}
           </tbody>
         </table>
       </div>

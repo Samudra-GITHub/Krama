@@ -93,6 +93,15 @@ export default function CheckoutPage() {
       status: "Processing",
       items: count,
       total,
+      lineItems: items.map((item) => ({
+        name: item.product.name,
+        colorway: item.color,
+        size: item.size,
+        quantity: item.quantity,
+        price: item.product.price,
+      })),
+      shippingAddress: `${shipping.address1}, ${shipping.city}, ${shipping.state} ${shipping.pincode}`,
+      paymentMethod: method === "upi" ? `UPI · ${upiId}` : method === "wallet" ? "Wallet" : "Card",
     });
     setOrderSummary({ count, total, orderId });
     setPlaced(true);

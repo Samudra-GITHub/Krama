@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { clsx } from "clsx";
-import { CreditCard, MapPin, Plus, Star, Trash2 } from "lucide-react";
+import { CreditCard, MapPin, Plus, Star, Trash2, ChevronDown } from "lucide-react";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/Button";
@@ -121,6 +121,7 @@ function ProfileSection() {
 
 function OrdersSection({ onShop }: { onShop: () => void }) {
   const orders = useOrdersStore((s) => s.orders);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   if (orders.length === 0) {
     return (
@@ -133,32 +134,74 @@ function OrdersSection({ onShop }: { onShop: () => void }) {
   return (
     <SectionCard title="Orders">
       <div className="flex flex-col divide-y divide-krama-border-subtle">
-        {orders.map((order) => (
-          <div key={order.id} className="flex flex-wrap items-center justify-between gap-3 py-4">
-            <div>
-              <p className="font-mono text-sm text-krama-text-dark">{order.id}</p>
-              <p className="text-xs text-krama-text-muted">
-                {new Date(order.date).toLocaleDateString("en-IN", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })}{" "}
-                · {order.items} item{order.items !== 1 ? "s" : ""}
-              </p>
-            </div>
-            <span
-              className={clsx(
-                "rounded-pill px-3 py-1 text-xs font-medium uppercase tracking-label",
-                STATUS_COLORS[order.status]
+        {orders.map((order) => {
+          const isOpen = expanded === order.id;
+          return (
+            <div key={order.id}>
+              <button
+                data-cursor="interactive"
+                onClick={() => setExpanded(isOpen ? null : order.id)}
+                className="flex w-full flex-wrap items-center justify-between gap-3 py-4 text-left"
+              >
+                <div>
+                  <p className="font-mono text-sm text-krama-text-dark">{order.id}</p>
+                  <p className="text-xs text-krama-text-muted">
+                    {new Date(order.date).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "short",
+                      year: "numeric",
+                    })}{" "}
+                    · {order.items} item{order.items !== 1 ? "s" : ""}
+                  </p>
+                </div>
+                <span
+                  className={clsx(
+                    "rounded-pill px-3 py-1 text-xs font-medium uppercase tracking-label",
+                    STATUS_COLORS[order.status]
+                  )}
+                >
+                  {order.status}
+                </span>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-sm tabular-nums text-krama-text-dark">
+                    {formatPrice(order.total)}
+                  </span>
+                  <ChevronDown
+                    size={15}
+                    className={clsx(
+                      "text-krama-text-muted transition-transform",
+                      isOpen && "rotate-180"
+                    )}
+                  />
+                </div>
+              </button>
+              {isOpen && (
+                <div className="mb-4 flex flex-col gap-3 rounded-lg bg-krama-surface-subtle p-4 text-sm">
+                  {order.lineItems?.map((item, i) => (
+                    <div key={i} className="flex justify-between text-krama-text-dark">
+                      <span>
+                        {item.name} ({item.colorway}, {item.size}) × {item.quantity}
+                      </span>
+                      <span className="font-mono tabular-nums">
+                        {formatPrice(item.price * item.quantity)}
+                      </span>
+                    </div>
+                  ))}
+                  {order.shippingAddress && (
+                    <p className="text-xs text-krama-text-muted">
+                      Shipped to {order.shippingAddress}
+                    </p>
+                  )}
+                  {order.paymentMethod && (
+                    <p className="text-xs text-krama-text-muted">
+                      Paid via {order.paymentMethod}
+                    </p>
+                  )}
+                </div>
               )}
-            >
-              {order.status}
-            </span>
-            <span className="font-mono text-sm tabular-nums text-krama-text-dark">
-              {formatPrice(order.total)}
-            </span>
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
       <button
         data-cursor="interactive"

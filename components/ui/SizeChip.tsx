@@ -23,7 +23,7 @@ export function SizeChip({ size, selected, soldOut, onClick }: SizeChipProps) {
           "border-krama-border-glass/40 text-krama-text-primary/25 line-through",
         !soldOut &&
           selected &&
-          "border-krama-accent bg-krama-accent text-[#04150a] scale-105",
+          "border-krama-accent bg-krama-accent text-black scale-105",
         !soldOut &&
           !selected &&
           "border-krama-border-glass text-krama-text-primary/80 hover:border-krama-accent-alt hover:text-krama-text-primary"

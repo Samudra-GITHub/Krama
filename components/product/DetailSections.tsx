@@ -80,8 +80,8 @@ export function DetailSections() {
                       <Star
                         key={i}
                         size={13}
-                        fill={i < review.rating ? "#22c55e" : "none"}
-                        stroke={i < review.rating ? "#22c55e" : "#6b7280"}
+                        fill={i < review.rating ? "#9fb8ff" : "none"}
+                        stroke={i < review.rating ? "#9fb8ff" : "#6b7280"}
                       />
                     ))}
                   </div>

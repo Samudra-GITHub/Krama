@@ -12,7 +12,7 @@ const base =
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-krama-accent text-[#04150a] px-8 h-14 shadow-[0_0_32px_rgba(34,197,94,0.45)] hover:brightness-110",
+    "bg-krama-accent text-black px-8 h-14 shadow-[0_0_40px_-12px_rgba(159,184,255,0.55)] hover:bg-[#b6c9ff]",
   secondary:
     "glass-card !rounded-pill px-8 h-14 text-krama-text-primary border-krama-border-glass hover:bg-krama-glass-light",
   tertiary:

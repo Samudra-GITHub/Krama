@@ -13,7 +13,7 @@ export const DROPS: Drop[] = [
     name: "Drop 001 — Gati",
     status: "Live",
     releaseDate: "2026-09-12",
-    gradient: "linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%)",
+    gradient: "linear-gradient(135deg, #3d4a7a 0%, #9fb8ff 100%)",
     productCount: 2,
   },
   {
@@ -21,7 +21,7 @@ export const DROPS: Drop[] = [
     name: "Drop 002 — Tezz",
     status: "Scheduled",
     releaseDate: "2026-10-20",
-    gradient: "linear-gradient(135deg, #22c55e 0%, #38bdf8 100%)",
+    gradient: "linear-gradient(135deg, #c7d4f5 0%, #9fb8ff 100%)",
     productCount: 2,
   },
   {
@@ -29,7 +29,7 @@ export const DROPS: Drop[] = [
     name: "Drop 003 — Udaan",
     status: "Draft",
     releaseDate: "2026-12-01",
-    gradient: "linear-gradient(135deg, #ec4899 0%, #7c3aed 100%)",
+    gradient: "linear-gradient(135deg, #6f84c9 0%, #3d4a7a 100%)",
     productCount: 2,
   },
 ];

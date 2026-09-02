@@ -31,7 +31,7 @@ export function Footer() {
             />
             <button
               type="submit"
-              className="h-11 rounded-pill bg-krama-accent px-5 text-xs font-semibold uppercase tracking-label text-[#04150a]"
+              className="h-11 rounded-pill bg-krama-accent px-5 text-xs font-semibold uppercase tracking-label text-black"
             >
               Join
             </button>

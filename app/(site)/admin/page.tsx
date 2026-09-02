@@ -150,7 +150,7 @@ function ProductsSection() {
       name: "New Silhouette",
       colorway: "Unnamed",
       price: 11999,
-      accent: "#38bdf8",
+      accent: "#9fb8ff",
       category: "Low",
       sizes: [8, 9, 10],
     };

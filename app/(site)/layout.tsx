@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Syne, Inter, JetBrains_Mono } from "next/font/google";
+import { Inter_Tight, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
 import { CustomCursor } from "@/components/motion/CustomCursor";
@@ -9,20 +9,14 @@ import { MobileNav } from "@/components/layout/MobileNav";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { StoreHydration } from "@/components/motion/StoreHydration";
 
-const syne = Syne({
-  variable: "--font-syne",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const plexMono = IBM_Plex_Mono({
+  variable: "--font-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500"],
 });
@@ -37,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${interTight.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-krama-bg font-body text-krama-text-primary">
         <SmoothScroll>

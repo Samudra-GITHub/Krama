@@ -18,7 +18,7 @@ export const ARTICLES: Article[] = [
     category: "Design",
     date: "2026-08-02",
     readTime: "6 min read",
-    gradient: "linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%)",
+    gradient: "linear-gradient(135deg, #3d4a7a 0%, #9fb8ff 100%)",
     body: [
       "Every KRAMA silhouette starts with a place, not a spec sheet. Gati started with a stopwatch — ten minutes, the average gap between locals at Andheri station during peak hour, and the distance a commuter has to cover to make the next one.",
       "The design team spent three months shadowing that sprint before a single sketch was drawn. What came back wasn't a mood board of other sneakers — it was a set of angles: the lean of a body cutting across a platform, the flex point in a knee mid-stride, the exact moment a foot rolls off the toe before the next step.",
@@ -33,7 +33,7 @@ export const ARTICLES: Article[] = [
     category: "Culture",
     date: "2026-07-18",
     readTime: "4 min read",
-    gradient: "linear-gradient(135deg, #22c55e 0%, #38bdf8 100%)",
+    gradient: "linear-gradient(135deg, #c7d4f5 0%, #9fb8ff 100%)",
     body: [
       "Before KRAMA was a sneaker label, it was a memory: glass jars of candy on a kirana store counter, backlit by a single tube light, catching every kid's eye at exactly foot height.",
       "That backlit-glass quality — warm, a little imperfect, unmistakably local — became the starting point for the brand's entire color language. It's why KRAMA's palette leans toward saturated gradients instead of flat panels: nothing in the memory was ever one solid color.",
@@ -47,7 +47,7 @@ export const ARTICLES: Article[] = [
     category: "Tech",
     date: "2026-06-30",
     readTime: "5 min read",
-    gradient: "linear-gradient(135deg, #f97316 0%, #ec4899 100%)",
+    gradient: "linear-gradient(135deg, #1f2847 0%, #6f84c9 100%)",
     body: [
       "Most performance sneakers are tested in climate-controlled labs against standards written for temperate cities. None of them account for a Mumbai monsoon — ankle-deep water, sudden humidity swings, and a commute that doesn't pause for weather.",
       "KRAMA's outsole compound was reformulated four times before it passed an internal 'gully test': a full week of real commutes in active monsoon conditions, tracked by the same handful of testers who'd flag anything from midsole waterlogging to lace-eyelet rust.",
@@ -61,7 +61,7 @@ export const ARTICLES: Article[] = [
     category: "Culture",
     date: "2026-06-05",
     readTime: "7 min read",
-    gradient: "linear-gradient(135deg, #ec4899 0%, #7c3aed 100%)",
+    gradient: "linear-gradient(135deg, #6f84c9 0%, #3d4a7a 100%)",
     body: [
       "The Western sneaker drop model — hype cycles, resale flipping, camping outside stores — took a different shape when it landed in Indian cities. Community mattered more than scarcity; a drop was an excuse for a gathering as much as a purchase.",
       "KRAMA leaned into that from Drop 001. Instead of a single flash release, each drop unfolds over a week: a campaign film, a community meetup, then the release — treating the sneaker itself as the closing chapter of a story, not the whole story.",

@@ -33,7 +33,7 @@ export function MobileNav() {
                 className={active ? "text-krama-accent" : "text-krama-text-primary/60"}
               />
               {item.badge && cartCount > 0 && (
-                <span className="absolute -right-2 -top-1.5 grid h-3.5 w-3.5 place-items-center rounded-pill bg-krama-accent text-[9px] font-semibold text-[#04150a]">
+                <span className="absolute -right-2 -top-1.5 grid h-3.5 w-3.5 place-items-center rounded-pill bg-krama-accent text-[9px] font-semibold text-black">
                   {cartCount}
                 </span>
               )}

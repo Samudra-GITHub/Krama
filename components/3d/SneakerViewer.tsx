@@ -103,8 +103,8 @@ export function SneakerViewer() {
         <circle cx="200" cy="200" r="168" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
         <defs>
           <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#38bdf8" />
-            <stop offset="100%" stopColor="#22c55e" />
+            <stop offset="0%" stopColor="#9fb8ff" />
+            <stop offset="100%" stopColor="#c7d4f5" />
           </linearGradient>
         </defs>
       </svg>
@@ -153,8 +153,8 @@ export function SneakerSilhouette({
           <stop offset="100%" stopColor="#64748b" />
         </linearGradient>
         <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor={accent ?? "#38bdf8"} />
-          <stop offset="100%" stopColor={accent ?? "#22c55e"} />
+          <stop offset="0%" stopColor={accent ?? "#9fb8ff"} />
+          <stop offset="100%" stopColor={accent ?? "#c7d4f5"} />
         </linearGradient>
       </defs>
 

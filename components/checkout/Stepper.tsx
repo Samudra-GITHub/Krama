@@ -14,7 +14,7 @@ export function Stepper({ current }: { current: number }) {
             <div
               className={clsx(
                 "grid h-7 w-7 shrink-0 place-items-center rounded-pill font-mono text-xs tabular-nums transition-colors duration-200",
-                i < current && "bg-krama-accent text-[#04150a]",
+                i < current && "bg-krama-accent text-black",
                 i === current && "border border-krama-accent text-krama-accent",
                 i > current && "border border-krama-border-subtle text-krama-text-muted"
               )}

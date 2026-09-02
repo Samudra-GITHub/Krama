@@ -25,7 +25,7 @@ export default function NotFound() {
           <Link
             href="/"
             data-cursor="interactive"
-            className="mt-4 rounded-pill bg-krama-accent px-8 py-3.5 text-xs font-semibold uppercase tracking-label text-[#04150a] shadow-[0_0_32px_rgba(34,197,94,0.45)] transition-transform hover:scale-[1.03]"
+            className="mt-4 rounded-pill bg-krama-accent px-8 py-3.5 text-xs font-semibold uppercase tracking-label text-black shadow-[0_0_40px_-12px_rgba(159,184,255,0.55)] transition-transform hover:scale-[1.03]"
           >
             Back to Home
           </Link>

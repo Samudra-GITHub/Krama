@@ -140,7 +140,7 @@ export default function LookbookPage() {
                 className={clsx(
                   "rounded-pill border px-4 py-1.5 text-xs uppercase tracking-label transition-colors duration-200",
                   activeFilter === "all"
-                    ? "border-krama-accent bg-krama-accent text-[#04150a]"
+                    ? "border-krama-accent bg-krama-accent text-black"
                     : "border-krama-border-glass text-krama-text-primary/70 hover:border-krama-accent-alt"
                 )}
               >
@@ -154,7 +154,7 @@ export default function LookbookPage() {
                   className={clsx(
                     "rounded-pill border px-4 py-1.5 text-xs uppercase tracking-label transition-colors duration-200",
                     activeFilter === c.slug
-                      ? "border-krama-accent bg-krama-accent text-[#04150a]"
+                      ? "border-krama-accent bg-krama-accent text-black"
                       : "border-krama-border-glass text-krama-text-primary/70 hover:border-krama-accent-alt"
                   )}
                 >

@@ -94,7 +94,7 @@ export function Nav() {
           >
             <ShoppingBag size={19} strokeWidth={1.5} />
             {cartCount > 0 && (
-              <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-pill bg-krama-accent text-[10px] font-semibold text-[#04150a]">
+              <span className="absolute -right-2 -top-2 grid h-4 w-4 place-items-center rounded-pill bg-krama-accent text-[10px] font-semibold text-black">
                 {cartCount}
               </span>
             )}

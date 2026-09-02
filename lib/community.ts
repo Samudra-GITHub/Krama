@@ -9,10 +9,10 @@ export interface CommunityPost {
 }
 
 const GRADIENTS = [
-  "linear-gradient(135deg, #7c3aed 0%, #38bdf8 100%)",
-  "linear-gradient(135deg, #22c55e 0%, #38bdf8 100%)",
-  "linear-gradient(135deg, #ec4899 0%, #7c3aed 100%)",
-  "linear-gradient(135deg, #f97316 0%, #ec4899 100%)",
+  "linear-gradient(135deg, #3d4a7a 0%, #9fb8ff 100%)",
+  "linear-gradient(135deg, #c7d4f5 0%, #9fb8ff 100%)",
+  "linear-gradient(135deg, #6f84c9 0%, #3d4a7a 100%)",
+  "linear-gradient(135deg, #1f2847 0%, #6f84c9 100%)",
 ];
 
 export const COMMUNITY_POSTS: CommunityPost[] = [

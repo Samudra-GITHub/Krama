@@ -39,7 +39,6 @@ export function MagneticButton({
   return (
     <motion.div
       ref={ref}
-      data-cursor="interactive"
       onPointerMove={handleMove}
       onPointerLeave={handleLeave}
       style={{ x: springX, y: springY }}

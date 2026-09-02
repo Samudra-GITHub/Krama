@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import Link from "next/link";
 import { Heart, ArrowRight, Volume2, VolumeX, Zap } from "lucide-react";
+import { useCursorTilt } from "@/lib/useCursorTilt";
+import { useCoarsePointer, useReducedMotion } from "@/lib/useReducedMotion";
 
 const VIDEO_URL =
   "https://zxdefgavgwfxastwmmjm.supabase.co/storage/v1/object/public/assets/sub2.mp4";
@@ -16,6 +18,16 @@ const STATS = [
 export function CampaignHero() {
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+  const coarsePointer = useCoarsePointer();
+
+  useCursorTilt(
+    { containerRef: sectionRef, wrapperRef: videoWrapperRef, glowRef },
+    { reducedMotion, coarsePointer }
+  );
 
   function toggleSound() {
     const video = videoRef.current;
@@ -25,9 +37,16 @@ export function CampaignHero() {
   }
 
   return (
-    <section className="relative flex min-h-screen flex-col overflow-hidden bg-krama-bg pt-20">
+    <section
+      ref={sectionRef}
+      className="relative flex min-h-screen flex-col overflow-hidden bg-krama-bg pt-20"
+      style={{ perspective: 1200 }}
+    >
       {/* background video */}
-      <div className="fixed inset-0 z-0 overflow-hidden">
+      <div
+        ref={videoWrapperRef}
+        className="fixed inset-0 z-0 overflow-hidden will-change-transform"
+      >
         <video
           ref={videoRef}
           muted
@@ -51,8 +70,9 @@ export function CampaignHero() {
 
       {/* heat scrim — KRAMA periwinkle */}
       <div
+        ref={glowRef}
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[1] mix-blend-screen"
+        className="pointer-events-none fixed inset-0 z-[1] mix-blend-screen will-change-transform"
         style={{
           background: "linear-gradient(to top, rgba(159,184,255,0.28), transparent 40%)",
         }}
@@ -107,7 +127,6 @@ export function CampaignHero() {
           <div className="flex flex-wrap gap-3">
             <Link
               href="/product/gati-runner-gully-haze"
-              data-cursor="interactive"
               className="animate-blur-fade-up flex items-center gap-2 rounded-pill bg-white px-7 py-3 font-semibold text-black transition-colors hover:bg-white/90"
               style={{ animationDelay: "620ms" }}
             >
@@ -116,7 +135,6 @@ export function CampaignHero() {
             </Link>
             <button
               onClick={toggleSound}
-              data-cursor="interactive"
               className="animate-blur-fade-up glass-card flex items-center gap-2 rounded-pill px-7 py-3 text-krama-text-primary"
               style={{ animationDelay: "720ms" }}
             >
@@ -125,7 +143,6 @@ export function CampaignHero() {
             </button>
             <Link
               href="/shop"
-              data-cursor="interactive"
               className="animate-blur-fade-up glass-card flex items-center gap-2 rounded-pill px-7 py-3 text-krama-text-primary"
               style={{ animationDelay: "780ms" }}
             >

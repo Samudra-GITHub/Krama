@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter_Tight, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/motion/SmoothScroll";
-import { CustomCursor } from "@/components/motion/CustomCursor";
 import { CartDrawer } from "@/components/layout/CartDrawer";
 import { Toaster } from "@/components/ui/Toaster";
 import { MobileNav } from "@/components/layout/MobileNav";
@@ -36,7 +35,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-full bg-krama-bg font-body text-krama-text-primary">
         <SmoothScroll>
           <StoreHydration />
-          <CustomCursor />
           <div className="pb-16 lg:pb-0">{children}</div>
           <MobileNav />
           <CartDrawer />

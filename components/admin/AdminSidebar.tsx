@@ -24,7 +24,6 @@ export function AdminSidebar({
       {ADMIN_SECTIONS.map((section) => (
         <button
           key={section.id}
-          data-cursor="interactive"
           onClick={() => onChange(section.id)}
           className={clsx(
             "flex shrink-0 items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-200 lg:shrink",

@@ -42,7 +42,6 @@ export function Nav() {
       >
         <Link
           href="/"
-          data-cursor="interactive"
           className="font-display text-xl font-bold uppercase tracking-widest text-krama-text-primary"
         >
           KRAMA
@@ -53,7 +52,6 @@ export function Nav() {
             <Link
               key={link.href}
               href={link.href}
-              data-cursor="interactive"
               className="relative text-sm font-medium uppercase tracking-meta text-krama-text-primary/80 transition-colors hover:text-krama-text-primary"
             >
               {link.label}
@@ -63,7 +61,6 @@ export function Nav() {
 
         <div className="flex items-center gap-5">
           <button
-            data-cursor="interactive"
             aria-label="Search"
             onClick={openSearch}
             className="hidden text-krama-text-primary/80 transition-colors hover:text-krama-accent-alt sm:block"
@@ -72,14 +69,12 @@ export function Nav() {
           </button>
           <Link
             href="/account?tab=wishlist"
-            data-cursor="interactive"
             aria-label="Wishlist"
             className="hidden text-krama-text-primary/80 transition-colors hover:text-krama-accent-alt sm:block"
           >
             <Heart size={19} strokeWidth={1.5} />
           </Link>
           <button
-            data-cursor="interactive"
             aria-label="Cart"
             onClick={openCart}
             className="relative text-krama-text-primary/80 transition-colors hover:text-krama-accent-alt"
@@ -93,14 +88,12 @@ export function Nav() {
           </button>
           <Link
             href="/account"
-            data-cursor="interactive"
             aria-label="Profile"
             className="hidden text-krama-text-primary/80 transition-colors hover:text-krama-accent-alt sm:block"
           >
             <User size={19} strokeWidth={1.5} />
           </Link>
           <button
-            data-cursor="interactive"
             aria-label={mobileMenuOpen ? "Close menu" : "Menu"}
             onClick={() => setMobileMenuOpen((v) => !v)}
             className="text-krama-text-primary/80 lg:hidden"
@@ -123,7 +116,6 @@ export function Nav() {
               <Link
                 key={link.href}
                 href={link.href}
-                data-cursor="interactive"
                 onClick={() => setMobileMenuOpen(false)}
                 className="border-b border-white/5 py-4 text-sm font-medium uppercase tracking-meta text-krama-text-primary/85 last:border-0"
               >
@@ -132,7 +124,6 @@ export function Nav() {
             ))}
             <div className="mt-2 flex items-center gap-6 pt-2 sm:hidden">
               <button
-                data-cursor="interactive"
                 onClick={() => {
                   setMobileMenuOpen(false);
                   openSearch();
@@ -143,7 +134,6 @@ export function Nav() {
               </button>
               <Link
                 href="/account?tab=wishlist"
-                data-cursor="interactive"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-2 text-xs uppercase tracking-label text-krama-text-primary/70"
               >
@@ -151,7 +141,6 @@ export function Nav() {
               </Link>
               <Link
                 href="/account"
-                data-cursor="interactive"
                 onClick={() => setMobileMenuOpen(false)}
                 className="flex items-center gap-2 text-xs uppercase tracking-label text-krama-text-primary/70"
               >

@@ -13,7 +13,6 @@ export function SizeChip({ size, selected, soldOut, onClick }: SizeChipProps) {
   return (
     <button
       type="button"
-      data-cursor="interactive"
       disabled={soldOut}
       onClick={onClick}
       aria-pressed={selected}

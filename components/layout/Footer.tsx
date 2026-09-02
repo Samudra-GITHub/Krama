@@ -101,7 +101,6 @@ function NewsletterForm() {
         />
         <button
           type="submit"
-          data-cursor="interactive"
           className="flex h-11 w-16 shrink-0 items-center justify-center rounded-pill bg-krama-accent text-xs font-semibold uppercase tracking-label text-black transition-transform active:scale-95"
         >
           {submitted ? <Check size={15} /> : "Join"}
@@ -126,7 +125,6 @@ function FooterColumn({
         <Link
           key={link.label}
           href={link.href}
-          data-cursor="interactive"
           className="text-sm text-krama-text-primary/70 transition-colors hover:text-krama-text-primary"
         >
           {link.label}

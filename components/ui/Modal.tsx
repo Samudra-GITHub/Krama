@@ -61,7 +61,6 @@ export function Modal({ open, onClose, title, children }: ModalProps) {
             <button
               onClick={onClose}
               aria-label="Close"
-              data-cursor="interactive"
               className="absolute right-5 top-5 text-krama-text-primary/60 transition-colors hover:text-krama-text-primary"
             >
               <X size={18} strokeWidth={1.5} />

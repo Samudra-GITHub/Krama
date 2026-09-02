@@ -66,6 +66,7 @@
 
   --shadow-krama-glass: var(--krama-shadow-glass);
   --shadow-krama-soft: var(--krama-shadow-soft);
+  --shadow-krama-glow: var(--krama-glow-accent);
 
   --radius-glass: 1rem;
   --radius-pill: 9999px;
@@ -294,20 +295,6 @@ body {
     opacity: 1;
     filter: none;
     transform: none;
-  }
-}
-
-/* ---------- Cursor ---------- */
-
-.cursor-none,
-.cursor-none * {
-  cursor: none !important;
-}
-
-@media (pointer: coarse) {
-  .cursor-none,
-  .cursor-none * {
-    cursor: auto !important;
   }
 }
 

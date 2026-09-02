@@ -39,7 +39,6 @@ export function FilterBar({ state, onChange, resultCount }: FilterBarProps) {
     <div className="sticky top-20 z-30">
       <div className="glass-card flex items-center justify-between px-5 py-3 lg:hidden">
         <button
-          data-cursor="interactive"
           onClick={() => setMobileOpen((v) => !v)}
           className="flex items-center gap-2 text-xs font-medium uppercase tracking-label text-krama-text-primary"
         >
@@ -62,7 +61,6 @@ export function FilterBar({ state, onChange, resultCount }: FilterBarProps) {
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
-                data-cursor="interactive"
                 onClick={() => onChange({ ...state, categories: toggle(state.categories, cat) })}
                 className={clsx(
                   "rounded-pill border px-4 py-1.5 text-xs uppercase tracking-label transition-colors duration-200",
@@ -106,7 +104,6 @@ export function FilterBar({ state, onChange, resultCount }: FilterBarProps) {
 
         <FilterGroup label="Sort">
           <select
-            data-cursor="interactive"
             value={state.sort}
             onChange={(e) => onChange({ ...state, sort: e.target.value as SortOption })}
             className="h-10 rounded-pill border border-krama-border-glass bg-transparent px-4 text-xs uppercase tracking-label text-krama-text-primary focus:border-krama-accent-alt"
@@ -119,7 +116,6 @@ export function FilterBar({ state, onChange, resultCount }: FilterBarProps) {
 
         {activeCount > 0 && (
           <button
-            data-cursor="interactive"
             onClick={clearAll}
             className="flex items-center gap-1 text-xs uppercase tracking-label text-krama-text-primary/50 transition-colors hover:text-krama-danger lg:ml-auto"
           >

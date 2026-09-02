@@ -139,7 +139,6 @@ function OrdersSection({ onShop }: { onShop: () => void }) {
           return (
             <div key={order.id}>
               <button
-                data-cursor="interactive"
                 onClick={() => setExpanded(isOpen ? null : order.id)}
                 className="flex w-full flex-wrap items-center justify-between gap-3 py-4 text-left"
               >
@@ -204,7 +203,6 @@ function OrdersSection({ onShop }: { onShop: () => void }) {
         })}
       </div>
       <button
-        data-cursor="interactive"
         onClick={onShop}
         className="mt-6 text-xs uppercase tracking-label text-krama-text-dark underline underline-offset-4"
       >
@@ -296,7 +294,6 @@ function AddressesSection() {
             </div>
             {!address.isDefault && (
               <button
-                data-cursor="interactive"
                 aria-label="Remove address"
                 onClick={() => handleRemove(address.id)}
                 className="shrink-0 text-krama-text-muted transition-colors hover:text-krama-danger"
@@ -307,7 +304,6 @@ function AddressesSection() {
           </div>
         ))}
         <button
-          data-cursor="interactive"
           onClick={() => setModalOpen(true)}
           className="flex items-center justify-center gap-2 rounded-lg border border-dashed border-krama-border-subtle py-4 text-sm text-krama-text-muted transition-colors hover:border-krama-text-dark hover:text-krama-text-dark"
         >
@@ -418,7 +414,6 @@ function PaymentSection() {
               )}
               {!method.isDefault && (
                 <button
-                  data-cursor="interactive"
                   aria-label="Remove payment method"
                   onClick={() => handleRemove(method.id)}
                   className="text-krama-text-muted transition-colors hover:text-krama-danger"
@@ -430,7 +425,6 @@ function PaymentSection() {
           </div>
         ))}
         <button
-          data-cursor="interactive"
           onClick={() => setModalOpen(true)}
           className="flex items-center justify-center gap-2 rounded-lg border border-dashed border-krama-border-subtle py-4 text-sm text-krama-text-muted transition-colors hover:border-krama-text-dark hover:text-krama-text-dark"
         >

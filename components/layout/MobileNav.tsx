@@ -53,7 +53,6 @@ export function MobileNav() {
           return (
             <button
               key={item.label}
-              data-cursor="interactive"
               onClick={openCart}
               className="flex flex-col items-center gap-1"
             >
@@ -66,7 +65,6 @@ export function MobileNav() {
           <Link
             key={item.label}
             href={item.href}
-            data-cursor="interactive"
             className="flex flex-col items-center gap-1"
           >
             {content}

@@ -73,7 +73,6 @@ export function CartDrawer() {
                 Your Cart
               </h2>
               <button
-                data-cursor="interactive"
                 onClick={close}
                 aria-label="Close cart"
                 className="text-krama-text-primary/60 transition-colors hover:text-krama-text-primary"
@@ -88,7 +87,6 @@ export function CartDrawer() {
                 <p className="text-sm text-krama-text-primary/60">Your cart is empty.</p>
                 <Link
                   href="/shop"
-                  data-cursor="interactive"
                   onClick={close}
                   className="text-xs uppercase tracking-label text-krama-accent-alt"
                 >
@@ -132,7 +130,6 @@ export function CartDrawer() {
                               </p>
                             </div>
                             <button
-                              data-cursor="interactive"
                               aria-label="Remove item"
                               onClick={() => removeItem(index)}
                               className="text-krama-text-primary/40 transition-colors hover:text-krama-danger"
@@ -144,7 +141,6 @@ export function CartDrawer() {
                           <div className="mt-1 flex items-center justify-between">
                             <div className="flex items-center gap-3 rounded-pill border border-krama-border-glass px-3 py-1">
                               <button
-                                data-cursor="interactive"
                                 aria-label="Decrease quantity"
                                 onClick={() => updateQuantity(index, Math.max(1, item.quantity - 1))}
                                 className="text-krama-text-primary/70 hover:text-krama-text-primary"
@@ -155,7 +151,6 @@ export function CartDrawer() {
                                 {item.quantity}
                               </span>
                               <button
-                                data-cursor="interactive"
                                 aria-label="Increase quantity"
                                 onClick={() => updateQuantity(index, Math.min(9, item.quantity + 1))}
                                 className="text-krama-text-primary/70 hover:text-krama-text-primary"
@@ -184,7 +179,7 @@ export function CartDrawer() {
                       {shipping === 0 ? "Free" : formatPrice(shipping)}
                     </span>
                   </div>
-                  <Link href="/checkout" onClick={close} data-cursor="interactive">
+                  <Link href="/checkout" onClick={close}>
                     <Button variant="primary" className="w-full">
                       Checkout · {formatPrice(subtotal + shipping)}
                     </Button>

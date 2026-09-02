@@ -135,7 +135,6 @@ export default function LookbookPage() {
             </h2>
             <div className="mb-8 flex flex-wrap gap-2">
               <button
-                data-cursor="interactive"
                 onClick={() => setActiveFilter("all")}
                 className={clsx(
                   "rounded-pill border px-4 py-1.5 text-xs uppercase tracking-label transition-colors duration-200",
@@ -149,7 +148,6 @@ export default function LookbookPage() {
               {COLLECTIONS.map((c) => (
                 <button
                   key={c.slug}
-                  data-cursor="interactive"
                   onClick={() => setActiveFilter(c.slug)}
                   className={clsx(
                     "rounded-pill border px-4 py-1.5 text-xs uppercase tracking-label transition-colors duration-200",
@@ -169,7 +167,6 @@ export default function LookbookPage() {
                 return (
                   <div
                     key={`${scene}-${i}`}
-                    data-cursor="interactive"
                     className="gallery-tile group relative overflow-hidden rounded-glass"
                     style={{
                       aspectRatio: i % 3 === 0 ? "3/4" : "1/1",

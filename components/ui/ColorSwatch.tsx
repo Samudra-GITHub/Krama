@@ -14,7 +14,6 @@ export function ColorSwatch({ hex, name, selected, onClick }: ColorSwatchProps) 
   return (
     <button
       type="button"
-      data-cursor="interactive"
       onClick={onClick}
       aria-pressed={selected}
       aria-label={name}

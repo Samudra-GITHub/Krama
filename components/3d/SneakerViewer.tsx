@@ -74,7 +74,6 @@ export function SneakerViewer() {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerLeave={handlePointerUp}
-      data-cursor="interactive"
     >
       {/* contact shadow */}
       <div

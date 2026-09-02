@@ -31,7 +31,6 @@ export default function CollectionsPage() {
             <Link
               key={collection.slug}
               href={`/collections/${collection.slug}`}
-              data-cursor="interactive"
               className="group relative flex aspect-[4/3] flex-col justify-end overflow-hidden rounded-glass p-7"
               style={{ background: collection.gradient }}
             >

@@ -24,7 +24,6 @@ export default function NotFound() {
           </p>
           <Link
             href="/"
-            data-cursor="interactive"
             className="mt-4 rounded-pill bg-krama-accent px-8 py-3.5 text-xs font-semibold uppercase tracking-label text-black shadow-[0_0_40px_-12px_rgba(159,184,255,0.55)] transition-transform hover:scale-[1.03]"
           >
             Back to Home

@@ -124,7 +124,6 @@ export function SearchOverlay() {
                 className="flex-1 bg-transparent text-sm text-krama-text-primary placeholder:text-krama-text-primary/40 focus:outline-none"
               />
               <button
-                data-cursor="interactive"
                 onClick={close}
                 aria-label="Close search"
                 className="text-krama-text-primary/50 hover:text-krama-text-primary"
@@ -152,7 +151,6 @@ export function SearchOverlay() {
                         <Link
                           href={result.href}
                           onClick={close}
-                          data-cursor="interactive"
                           className="flex items-center gap-3 rounded-lg px-4 py-3 transition-colors hover:bg-white/5"
                         >
                           <Icon size={15} className="shrink-0 text-krama-text-primary/40" strokeWidth={1.5} />

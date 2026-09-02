@@ -49,7 +49,6 @@ export function Carousel({ children }: { children: React.ReactNode[] }) {
       {children.length > 1 && (
         <>
           <button
-            data-cursor="interactive"
             aria-label="Previous"
             onClick={() => scrollToIndex(Math.max(0, active - 1))}
             disabled={active === 0}
@@ -58,7 +57,6 @@ export function Carousel({ children }: { children: React.ReactNode[] }) {
             <ChevronLeft size={16} />
           </button>
           <button
-            data-cursor="interactive"
             aria-label="Next"
             onClick={() => scrollToIndex(Math.min(children.length - 1, active + 1))}
             disabled={active === children.length - 1}
@@ -71,7 +69,6 @@ export function Carousel({ children }: { children: React.ReactNode[] }) {
             {children.map((_, i) => (
               <button
                 key={i}
-                data-cursor="interactive"
                 aria-label={`Go to slide ${i + 1}`}
                 onClick={() => scrollToIndex(i)}
                 className={clsx(

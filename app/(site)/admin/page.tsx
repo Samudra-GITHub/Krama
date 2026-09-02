@@ -123,7 +123,6 @@ function DropsSection() {
               {drop.status}
             </span>
             <button
-              data-cursor="interactive"
               disabled={drop.status === "Live"}
               onClick={() => advanceStatus(drop.id)}
               className="rounded-pill border border-krama-border-subtle px-4 py-1.5 text-xs uppercase tracking-label text-krama-text-dark transition-colors hover:border-krama-text-dark disabled:opacity-30"
@@ -175,7 +174,6 @@ function ProductsSection() {
       title="Products"
       action={
         <button
-          data-cursor="interactive"
           onClick={addProduct}
           className="flex items-center gap-1.5 rounded-pill bg-krama-text-dark px-4 py-2 text-xs uppercase tracking-label text-white"
         >
@@ -207,7 +205,6 @@ function ProductsSection() {
                 <td className="py-3 text-right">
                   <div className="flex items-center justify-end gap-3">
                     <button
-                      data-cursor="interactive"
                       aria-label="Edit product"
                       onClick={() => setEditing(product)}
                       className="text-krama-text-muted transition-colors hover:text-krama-text-dark"
@@ -215,7 +212,6 @@ function ProductsSection() {
                       <Pencil size={15} strokeWidth={1.5} />
                     </button>
                     <button
-                      data-cursor="interactive"
                       aria-label="Remove product"
                       onClick={() => removeProduct(product.id)}
                       className="text-krama-text-muted transition-colors hover:text-krama-danger"
@@ -339,7 +335,6 @@ function OrdersSection() {
                 <Fragment key={order.id}>
                   <tr
                     onClick={() => setExpanded(isOpen ? null : order.id)}
-                    data-cursor="interactive"
                     className="cursor-pointer border-b border-krama-border-subtle/60 hover:bg-krama-surface-subtle"
                   >
                     <td className="py-3 font-mono text-krama-text-dark">{order.id}</td>
@@ -354,7 +349,6 @@ function OrdersSection() {
                     </td>
                     <td className="py-3" onClick={(e) => e.stopPropagation()}>
                       <select
-                        data-cursor="interactive"
                         value={order.status}
                         onChange={(e) => updateStatus(order.id, e.target.value as Order["status"])}
                         className="rounded-pill border border-krama-border-subtle bg-white px-3 py-1 text-xs uppercase tracking-label text-krama-text-dark focus:border-krama-text-dark focus:outline-none"

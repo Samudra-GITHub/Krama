@@ -89,7 +89,6 @@ export default function CommunityPage() {
                 <div
                   key={post.id}
                   id={post.id}
-                  data-cursor="interactive"
                   className="group relative aspect-[4/5] overflow-hidden rounded-glass"
                   style={{ background: post.gradient }}
                 >
@@ -153,7 +152,6 @@ export default function CommunityPage() {
                 <button
                   key={i}
                   type="button"
-                  data-cursor="interactive"
                   onClick={() => setGradientIndex(i)}
                   aria-label={`Backdrop ${i + 1}`}
                   className={clsx(

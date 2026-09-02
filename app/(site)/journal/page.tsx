@@ -38,7 +38,6 @@ export default function JournalPage() {
         <div className="mx-auto max-w-screen-xl px-6 py-12 md:px-10">
           <Link
             href={`/journal/${featured.slug}`}
-            data-cursor="interactive"
             className="group mb-14 grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-10"
           >
             <div
@@ -68,7 +67,6 @@ export default function JournalPage() {
               <Link
                 key={article.slug}
                 href={`/journal/${article.slug}`}
-                data-cursor="interactive"
                 className="group flex flex-col gap-3"
               >
                 <div

@@ -96,7 +96,6 @@ export default async function ArticlePage({
                 <Link
                   key={a.slug}
                   href={`/journal/${a.slug}`}
-                  data-cursor="interactive"
                   className="group flex flex-col gap-3"
                 >
                   <div

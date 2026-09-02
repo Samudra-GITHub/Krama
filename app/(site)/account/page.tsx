@@ -15,6 +15,7 @@ import { useWishlistStore } from "@/lib/store/wishlist";
 import { useToastStore } from "@/lib/store/toast";
 import { useOrdersStore } from "@/lib/store/orders";
 import { useAddressesStore } from "@/lib/store/addresses";
+import { usePaymentsStore, guessCardBrand } from "@/lib/store/payments";
 import { PRODUCTS } from "@/lib/products";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
@@ -315,28 +316,105 @@ function AddressesSection() {
 }
 
 function PaymentSection() {
+  const methods = usePaymentsStore((s) => s.methods);
+  const addMethod = usePaymentsStore((s) => s.addMethod);
+  const removeMethod = usePaymentsStore((s) => s.removeMethod);
+  const pushToast = useToastStore((s) => s.push);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiry, setExpiry] = useState("");
+  const [error, setError] = useState("");
+
+  function handleAdd(e: React.FormEvent) {
+    e.preventDefault();
+    const digits = cardNumber.replace(/\D/g, "");
+    if (digits.length < 12) {
+      setError("Enter a valid card number.");
+      return;
+    }
+    if (!/^\d{2}\/\d{2}$/.test(expiry)) {
+      setError("Expiry should be MM/YY.");
+      return;
+    }
+    addMethod({ brand: guessCardBrand(digits), last4: digits.slice(-4), expiry });
+    pushToast("Payment method added", "success");
+    setCardNumber("");
+    setExpiry("");
+    setError("");
+    setModalOpen(false);
+  }
+
+  function handleRemove(id: string) {
+    removeMethod(id);
+    pushToast("Payment method removed", "info");
+  }
+
   return (
     <SectionCard title="Payment Methods">
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between gap-4 rounded-lg border border-krama-border-subtle p-4">
-          <div className="flex items-center gap-3">
-            <CreditCard size={20} className="text-krama-text-muted" strokeWidth={1.5} />
-            <div>
-              <p className="text-sm font-medium text-krama-text-dark">Visa •••• 4242</p>
-              <p className="text-xs text-krama-text-muted">Expires 12/28</p>
+        {methods.map((method) => (
+          <div
+            key={method.id}
+            className="flex items-center justify-between gap-4 rounded-lg border border-krama-border-subtle p-4"
+          >
+            <div className="flex items-center gap-3">
+              <CreditCard size={20} className="text-krama-text-muted" strokeWidth={1.5} />
+              <div>
+                <p className="text-sm font-medium text-krama-text-dark">
+                  {method.brand} •••• {method.last4}
+                </p>
+                <p className="text-xs text-krama-text-muted">Expires {method.expiry}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {method.isDefault && (
+                <span className="rounded-pill bg-krama-surface-subtle px-2 py-0.5 text-[10px] uppercase tracking-label text-krama-text-muted">
+                  Default
+                </span>
+              )}
+              {!method.isDefault && (
+                <button
+                  data-cursor="interactive"
+                  aria-label="Remove payment method"
+                  onClick={() => handleRemove(method.id)}
+                  className="text-krama-text-muted transition-colors hover:text-krama-danger"
+                >
+                  <Trash2 size={15} strokeWidth={1.5} />
+                </button>
+              )}
             </div>
           </div>
-          <span className="rounded-pill bg-krama-surface-subtle px-2 py-0.5 text-[10px] uppercase tracking-label text-krama-text-muted">
-            Default
-          </span>
-        </div>
+        ))}
         <button
           data-cursor="interactive"
+          onClick={() => setModalOpen(true)}
           className="flex items-center justify-center gap-2 rounded-lg border border-dashed border-krama-border-subtle py-4 text-sm text-krama-text-muted transition-colors hover:border-krama-text-dark hover:text-krama-text-dark"
         >
           <Plus size={15} /> Add payment method
         </button>
       </div>
+
+      <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Add Payment Method">
+        <form onSubmit={handleAdd} className="flex flex-col gap-4">
+          <Field
+            label="Card number"
+            placeholder="1234 1234 1234 1234"
+            value={cardNumber}
+            onChange={(e) => setCardNumber(e.target.value)}
+          />
+          <Field
+            label="Expiry (MM/YY)"
+            placeholder="12/28"
+            value={expiry}
+            onChange={(e) => setExpiry(e.target.value)}
+          />
+          {error && <p className="text-xs text-krama-danger">{error}</p>}
+          <Button type="submit" variant="primary" className="w-fit">
+            Save Card
+          </Button>
+        </form>
+      </Modal>
     </SectionCard>
   );
 }

@@ -6,6 +6,7 @@ import { useWishlistStore } from "@/lib/store/wishlist";
 import { useOrdersStore } from "@/lib/store/orders";
 import { useReviewsStore } from "@/lib/store/reviews";
 import { useAddressesStore } from "@/lib/store/addresses";
+import { usePaymentsStore } from "@/lib/store/payments";
 
 export function StoreHydration() {
   useEffect(() => {
@@ -14,6 +15,7 @@ export function StoreHydration() {
     useOrdersStore.persist.rehydrate();
     useReviewsStore.persist.rehydrate();
     useAddressesStore.persist.rehydrate();
+    usePaymentsStore.persist.rehydrate();
   }, []);
 
   return null;

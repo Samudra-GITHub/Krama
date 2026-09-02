@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Heart, Minus, Plus, Ruler } from "lucide-react";
+import { Heart, Minus, Plus, Ruler, RotateCcw, Truck } from "lucide-react";
 import { clsx } from "clsx";
 import Link from "next/link";
 import type { Product } from "@/lib/products";
@@ -20,6 +20,13 @@ import { useWishlistStore } from "@/lib/store/wishlist";
 import { useToastStore } from "@/lib/store/toast";
 
 const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
+
+function lowStockCount(productId: string, size: number) {
+  const seed = `${productId}-${size}`;
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) >>> 0;
+  return (hash % 3) + 1;
+}
 
 const SIZE_CHART = [
   { us: 7, uk: 6, eu: 40, cm: 25 },
@@ -92,14 +99,43 @@ export function ProductView({ product }: { product: Product }) {
 
           <Rating value={product.rating} count={product.reviewCount} />
 
-          <p className="font-mono text-xl tabular-nums text-krama-text-primary">
-            {formatPrice(product.price)}
-          </p>
+          <div className="flex items-center gap-3">
+            <p className="font-mono text-xl tabular-nums text-krama-text-primary">
+              {formatPrice(product.price)}
+            </p>
+            {product.originalPrice && (
+              <>
+                <p className="font-mono text-sm tabular-nums text-krama-text-primary/40 line-through">
+                  {formatPrice(product.originalPrice)}
+                </p>
+                <span className="rounded-pill bg-krama-danger/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-label text-krama-danger">
+                  {Math.round((1 - product.price / product.originalPrice) * 100)}% off
+                </span>
+              </>
+            )}
+          </div>
 
-          <p className="max-w-md text-sm leading-relaxed text-krama-text-primary/60">
-            Engineered mesh upper, recycled-EVA midsole, full-contact rubber outsole.
-            Built for the pace of the metro and the grip of the gully.
-          </p>
+          {product.fit && (
+            <p className="text-xs uppercase tracking-label text-krama-text-primary/50">
+              Fit: <span className="text-krama-accent-alt">{product.fit}</span>
+            </p>
+          )}
+
+          {product.features && product.features.length > 0 ? (
+            <ul className="flex max-w-md flex-col gap-1.5 text-sm leading-relaxed text-krama-text-primary/60">
+              {product.features.map((feature) => (
+                <li key={feature} className="flex gap-2">
+                  <span className="mt-2 h-1 w-1 shrink-0 rounded-pill bg-krama-accent" />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="max-w-md text-sm leading-relaxed text-krama-text-primary/60">
+              Engineered mesh upper, recycled-EVA midsole, full-contact rubber outsole.
+              Built for the pace of the metro and the grip of the gully.
+            </p>
+          )}
 
           {variants.length > 1 && (
             <div className="flex flex-col gap-2">
@@ -126,7 +162,6 @@ export function ProductView({ product }: { product: Product }) {
                 Size
               </span>
               <button
-                data-cursor="interactive"
                 onClick={() => setSizeGuideOpen(true)}
                 className="flex items-center gap-1 text-[11px] uppercase tracking-label text-krama-text-primary/50 transition-colors hover:text-krama-accent-alt"
               >
@@ -151,6 +186,11 @@ export function ProductView({ product }: { product: Product }) {
             {sizeError && (
               <p className="text-xs text-krama-danger">Select a size to continue.</p>
             )}
+            {selectedSize && product.lowStockSizes?.includes(selectedSize) && (
+              <p className="text-xs text-krama-accent">
+                Only {lowStockCount(product.id, selectedSize)} left in size {selectedSize}
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col gap-2">
@@ -159,7 +199,6 @@ export function ProductView({ product }: { product: Product }) {
             </span>
             <div className="flex w-fit items-center gap-4 rounded-pill border border-krama-border-glass px-4 py-2">
               <button
-                data-cursor="interactive"
                 aria-label="Decrease quantity"
                 onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                 className="text-krama-text-primary/70 transition-colors hover:text-krama-text-primary"
@@ -170,7 +209,6 @@ export function ProductView({ product }: { product: Product }) {
                 {quantity}
               </span>
               <button
-                data-cursor="interactive"
                 aria-label="Increase quantity"
                 onClick={() => setQuantity((q) => Math.min(9, q + 1))}
                 className="text-krama-text-primary/70 transition-colors hover:text-krama-text-primary"
@@ -187,7 +225,6 @@ export function ProductView({ product }: { product: Product }) {
               </Button>
             </MagneticButton>
             <button
-              data-cursor="interactive"
               aria-label="Add to wishlist"
               onClick={() => {
                 toggleWishlist(product.id);
@@ -207,9 +244,19 @@ export function ProductView({ product }: { product: Product }) {
             </button>
           </div>
 
+          <div className="flex flex-col gap-2 text-xs text-krama-text-primary/50">
+            <span className="flex items-center gap-2">
+              <Truck size={14} strokeWidth={1.5} />
+              Delivered in 2–4 days · Free above {formatPrice(15000)}
+            </span>
+            <span className="flex items-center gap-2">
+              <RotateCcw size={14} strokeWidth={1.5} />
+              Free returns and exchanges within 14 days
+            </span>
+          </div>
+
           <Link
             href={collection ? `/collections/${collection.slug}` : "/lookbook"}
-            data-cursor="interactive"
             className="w-fit text-xs uppercase tracking-label text-krama-text-primary/50 underline decoration-krama-border-glass underline-offset-4 transition-colors hover:text-krama-accent-alt"
           >
             View in Lookbook

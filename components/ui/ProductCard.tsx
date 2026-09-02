@@ -19,8 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/product/${slug}`}
-      data-cursor="interactive"
-      className="product-card group relative flex flex-col overflow-hidden rounded-glass bg-krama-surface"
+      className="product-card group relative flex flex-col overflow-hidden rounded-glass bg-krama-surface transition-all duration-300 ease-out hover:scale-[1.02] hover:shadow-krama-glow"
     >
       <div
         className="relative flex aspect-[4/5] items-center justify-center overflow-hidden"

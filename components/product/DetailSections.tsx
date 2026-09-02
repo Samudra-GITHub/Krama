@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Star } from "lucide-react";
 import { gsap, useGSAP, ScrollTrigger } from "@/lib/gsap";
 import { useReducedMotion } from "@/lib/useReducedMotion";
 import { useReviewsStore } from "@/lib/store/reviews";
 import { useToastStore } from "@/lib/store/toast";
 import { Button } from "@/components/ui/Button";
+import { PRODUCTS, type ProductSpecs } from "@/lib/products";
 
 const SECTIONS = [
   {
@@ -23,9 +24,17 @@ const SECTIONS = [
   },
 ];
 
+const SPEC_LABELS: { key: keyof ProductSpecs; label: string }[] = [
+  { key: "weight", label: "Weight" },
+  { key: "drop", label: "Drop" },
+  { key: "outsole", label: "Outsole" },
+  { key: "upper", label: "Upper" },
+];
+
 export function DetailSections({ productId }: { productId: string }) {
   const reducedMotion = useReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
+  const specs = PRODUCTS.find((p) => p.id === productId)?.specs;
 
   useGSAP(
     () => {
@@ -62,23 +71,57 @@ export function DetailSections({ productId }: { productId: string }) {
           </div>
         ))}
 
+        {specs && (
+          <div className="detail-block">
+            <h3 className="mb-4 font-display text-2xl font-bold uppercase text-krama-text-primary">
+              Specs
+            </h3>
+            <dl className="grid max-w-xl grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
+              {SPEC_LABELS.map(({ key, label }) => (
+                <div key={key}>
+                  <dt className="text-[10px] uppercase tracking-label text-krama-text-primary/40">
+                    {label}
+                  </dt>
+                  <dd className="mt-1 font-mono text-sm text-krama-text-primary/80">
+                    {specs[key]}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+
         <ReviewsSection productId={productId} />
       </div>
     </div>
   );
 }
 
+const SORTS = ["Newest", "Highest rated", "Lowest rated"] as const;
+type Sort = (typeof SORTS)[number];
+
 function ReviewsSection({ productId }: { productId: string }) {
   const allReviews = useReviewsStore((s) => s.reviews);
   const addReview = useReviewsStore((s) => s.addReview);
   const pushToast = useToastStore((s) => s.push);
-  const reviews = allReviews.filter((r) => r.productId === productId);
+  const productReviews = allReviews.filter((r) => r.productId === productId);
 
   const [formOpen, setFormOpen] = useState(false);
   const [name, setName] = useState("");
   const [rating, setRating] = useState(0);
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const [sort, setSort] = useState<Sort>("Newest");
+  const [minRating, setMinRating] = useState(0);
+
+  const reviews = useMemo(() => {
+    const filtered = productReviews.filter((r) => r.rating >= minRating);
+    return filtered.sort((a, b) => {
+      if (sort === "Highest rated") return b.rating - a.rating;
+      if (sort === "Lowest rated") return a.rating - b.rating;
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
+  }, [productReviews, sort, minRating]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -102,7 +145,6 @@ function ReviewsSection({ productId }: { productId: string }) {
           Reviews
         </h3>
         <button
-          data-cursor="interactive"
           onClick={() => setFormOpen((v) => !v)}
           className="text-xs uppercase tracking-label text-krama-accent transition-colors hover:text-krama-accent-alt"
         >
@@ -121,7 +163,6 @@ function ReviewsSection({ productId }: { productId: string }) {
                 <button
                   key={i}
                   type="button"
-                  data-cursor="interactive"
                   onClick={() => setRating(i + 1)}
                   aria-label={`${i + 1} star`}
                 >
@@ -154,9 +195,43 @@ function ReviewsSection({ productId }: { productId: string }) {
         </form>
       )}
 
-      {reviews.length === 0 ? (
+      {productReviews.length > 0 && (
+        <div className="mb-5 flex flex-wrap items-center gap-3">
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value as Sort)}
+            className="h-9 rounded-pill border border-krama-border-glass bg-transparent px-3 text-xs uppercase tracking-label text-krama-text-primary/80 focus:border-krama-accent focus:outline-none"
+          >
+            {SORTS.map((s) => (
+              <option key={s} value={s} className="bg-krama-bg-alt text-krama-text-primary">
+                {s}
+              </option>
+            ))}
+          </select>
+          <select
+            value={minRating}
+            onChange={(e) => setMinRating(Number(e.target.value))}
+            className="h-9 rounded-pill border border-krama-border-glass bg-transparent px-3 text-xs uppercase tracking-label text-krama-text-primary/80 focus:border-krama-accent focus:outline-none"
+          >
+            <option value={0} className="bg-krama-bg-alt text-krama-text-primary">
+              All ratings
+            </option>
+            {[5, 4, 3, 2, 1].map((r) => (
+              <option key={r} value={r} className="bg-krama-bg-alt text-krama-text-primary">
+                {r}★ & up
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+
+      {productReviews.length === 0 ? (
         <p className="text-sm text-krama-text-primary/50">
           No reviews yet — be the first to share your fit.
+        </p>
+      ) : reviews.length === 0 ? (
+        <p className="text-sm text-krama-text-primary/50">
+          No reviews match this filter.
         </p>
       ) : (
         <div className="flex flex-col gap-5">

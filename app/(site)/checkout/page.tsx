@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { motion } from "motion/react";
-import { CheckCircle2, CreditCard, Smartphone, Wallet } from "lucide-react";
+import { CheckCircle2, CreditCard, Lock, RotateCcw, Smartphone, Wallet } from "lucide-react";
 import { clsx } from "clsx";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
@@ -122,7 +122,6 @@ export default function CheckoutPage() {
           </p>
           <Link
             href="/shop"
-            data-cursor="interactive"
             className="text-sm uppercase tracking-label text-krama-accent-alt"
           >
             Browse the shop
@@ -220,7 +219,6 @@ export default function CheckoutPage() {
                   ).map((opt) => (
                     <button
                       key={opt.id}
-                      data-cursor="interactive"
                       onClick={() => setMethod(opt.id)}
                       className={clsx(
                         "flex flex-1 flex-col items-center gap-2 rounded-lg border py-4 text-xs uppercase tracking-label transition-colors duration-200",
@@ -310,6 +308,17 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                   ))}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-krama-text-muted">
+                  <span className="flex items-center gap-1.5">
+                    <Lock size={13} strokeWidth={1.5} />
+                    Secure, encrypted payment
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <RotateCcw size={13} strokeWidth={1.5} />
+                    Free returns within 14 days
+                  </span>
                 </div>
 
                 <div className="flex gap-3">
@@ -403,7 +412,6 @@ function SuccessScreen({
         </p>
         <Link
           href="/shop"
-          data-cursor="interactive"
           className="mt-2 text-xs uppercase tracking-label text-krama-accent-alt"
         >
           Continue Shopping

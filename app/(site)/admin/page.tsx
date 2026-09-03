@@ -37,7 +37,7 @@ export default function AdminPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-krama-surface-subtle pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-surface-subtle pt-20">
         <div className="border-b border-krama-border-subtle px-6 py-10 md:px-10">
           <span className="text-xs uppercase tracking-label text-krama-text-muted">
             Admin — demo data, local only

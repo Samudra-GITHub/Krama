@@ -4,6 +4,7 @@ import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { ProductView } from "@/components/product/ProductView";
 import { DetailSections } from "@/components/product/DetailSections";
+import { RelatedProducts } from "@/components/product/RelatedProducts";
 import { PRODUCTS } from "@/lib/products";
 
 export function generateStaticParams() {
@@ -45,8 +46,14 @@ export default async function ProductPage({
     "@context": "https://schema.org",
     "@type": "Product",
     name: `${product.name} — ${product.colorway}`,
+    description: `${product.name} in ${product.colorway}. ${product.features?.[0] ?? ""}`,
     brand: { "@type": "Brand", name: "KRAMA" },
     category: product.category,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating,
+      reviewCount: product.reviewCount,
+    },
     offers: {
       "@type": "Offer",
       priceCurrency: "INR",
@@ -64,9 +71,10 @@ export default async function ProductPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Nav />
-      <main className="min-h-screen bg-krama-bg pt-20 pb-24 lg:pb-0">
+      <main id="main-content" className="min-h-screen bg-krama-bg pt-20 pb-24 lg:pb-0">
         <ProductView product={product} />
         <DetailSections productId={product.id} />
+        <RelatedProducts productId={product.id} />
       </main>
       <Footer />
     </>

@@ -116,7 +116,7 @@ export default function CheckoutPage() {
     return (
       <>
         <Nav />
-        <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-krama-bg px-6 pt-20 text-center">
+        <main id="main-content" className="flex min-h-screen flex-col items-center justify-center gap-4 bg-krama-bg px-6 pt-20 text-center">
           <p className="font-display text-xl font-semibold text-krama-text-primary">
             Your cart is empty
           </p>
@@ -135,7 +135,7 @@ export default function CheckoutPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-krama-bg pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-bg pt-20">
         <div className="border-b border-white/10 px-6 py-10 md:px-10">
           <Stepper current={step} />
         </div>
@@ -381,7 +381,7 @@ function SuccessScreen({
   const reducedMotion = useReducedMotion();
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
+    <main id="main-content" className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
       <div className="absolute inset-0" style={{ background: "var(--krama-gradient-hero)" }} />
       <div className="noise-overlay" />
       <div className="absolute inset-0 bg-krama-bg/60" />

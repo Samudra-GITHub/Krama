@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <>
       <Nav />
-      <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20 text-center">
+      <main id="main-content" className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pt-20 text-center">
         <div className="absolute inset-0" style={{ background: "var(--krama-gradient-hero)" }} />
         <div className="noise-overlay" />
         <div className="absolute inset-0 bg-krama-bg/75" />

@@ -43,7 +43,7 @@ function AccountPageInner() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-krama-surface-subtle pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-surface-subtle pt-20">
         <div className="border-b border-krama-border-subtle px-6 py-10 md:px-10">
           <h1 className="font-display text-3xl font-bold uppercase text-krama-text-dark">
             My Account

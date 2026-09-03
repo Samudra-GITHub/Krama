@@ -60,7 +60,7 @@ export default async function ArticlePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Nav />
-      <main className="min-h-screen bg-krama-bg pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-bg pt-20">
         <div
           className="relative flex min-h-[50vh] flex-col justify-end px-6 py-14 md:px-10"
           style={{ background: article.gradient }}

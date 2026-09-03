@@ -40,7 +40,7 @@ export default async function CollectionPage({
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-krama-bg pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-bg pt-20">
         <div
           className="relative flex min-h-[60vh] flex-col justify-end overflow-hidden px-6 py-14 md:px-10"
           style={{ background: collection.gradient }}

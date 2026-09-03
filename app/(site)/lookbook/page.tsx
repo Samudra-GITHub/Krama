@@ -77,7 +77,7 @@ export default function LookbookPage() {
   return (
     <div ref={rootRef}>
       <Nav />
-      <main className="min-h-screen bg-krama-bg pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-bg pt-20">
         {/* editorial hero */}
         <div className="relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
           <div className="absolute inset-0" style={{ background: "var(--krama-gradient-hero)" }} />

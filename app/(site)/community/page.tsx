@@ -63,7 +63,7 @@ export default function CommunityPage() {
   return (
     <>
       <Nav />
-      <main className="min-h-screen bg-krama-bg pt-20">
+      <main id="main-content" className="min-h-screen bg-krama-bg pt-20">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-white/10 px-6 py-14 md:px-10 lg:py-20">
           <div>
             <span className="text-xs uppercase tracking-label text-krama-accent-alt">

@@ -12,7 +12,10 @@ import { useReducedMotion } from "@/lib/useReducedMotion";
  * contact-shadow behavior below is written to mirror what the Spline
  * scene's orbit + hotspot events should drive.
  */
-export function SneakerViewer() {
+export function SneakerViewer({
+  accent,
+  sneakerClassName,
+}: { accent?: string; sneakerClassName?: string } = {}) {
   const reducedMotion = useReducedMotion();
   const ringRef = useRef<SVGGElement>(null);
   const ringTween = useRef<gsap.core.Tween | null>(null);
@@ -117,7 +120,7 @@ export function SneakerViewer() {
           transformStyle: "preserve-3d",
         }}
       >
-        <SneakerSilhouette />
+        <SneakerSilhouette accent={accent} className={sneakerClassName} />
       </motion.div>
 
       {/* drag hint */}

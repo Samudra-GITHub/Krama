@@ -2,100 +2,58 @@
 
 import { useRef, useState } from "react";
 import Link from "next/link";
-import { Heart, ArrowRight, Volume2, VolumeX, Zap } from "lucide-react";
-import { useCursorTilt } from "@/lib/useCursorTilt";
-import { useCoarsePointer, useReducedMotion } from "@/lib/useReducedMotion";
+import { ArrowRight, ChevronLeft, ChevronRight, Heart } from "lucide-react";
+import { clsx } from "clsx";
+import { PRODUCTS } from "@/lib/products";
+import { SneakerViewer, SneakerSilhouette } from "@/components/3d/SneakerViewer";
+import { ColorSwatch } from "@/components/ui/ColorSwatch";
+import { Rating } from "@/components/ui/Rating";
+import { useWishlistStore } from "@/lib/store/wishlist";
+import { useToastStore } from "@/lib/store/toast";
 
-const VIDEO_URL =
-  "https://zxdefgavgwfxastwmmjm.supabase.co/storage/v1/object/public/assets/sub2.mp4";
+const formatPrice = (price: number) => `₹${price.toLocaleString("en-IN")}`;
 
-const STATS = [
-  { value: "Krama 002", label: "Sequence No.", delay: 800 },
-  { value: "Gully Haze", label: "Colorway", delay: 860 },
-  { value: "12.09.26", label: "Release", delay: 920 },
-];
+const FEATURED_VARIANTS = PRODUCTS.filter((p) => p.name === "Gati Runner");
+
+const MORE_PRODUCTS = PRODUCTS.filter(
+  (p, i, arr) => p.name !== "Gati Runner" && arr.findIndex((q) => q.name === p.name) === i
+);
 
 export function CampaignHero() {
-  const [muted, setMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const sectionRef = useRef<HTMLElement>(null);
-  const videoWrapperRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-  const reducedMotion = useReducedMotion();
-  const coarsePointer = useCoarsePointer();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const active = FEATURED_VARIANTS[activeIndex];
+  const wishlisted = useWishlistStore((s) => s.ids.includes(active.id));
+  const toggleWishlist = useWishlistStore((s) => s.toggle);
+  const pushToast = useToastStore((s) => s.push);
+  const moreTrackRef = useRef<HTMLDivElement>(null);
 
-  useCursorTilt(
-    { containerRef: sectionRef, wrapperRef: videoWrapperRef, glowRef },
-    { reducedMotion, coarsePointer }
-  );
-
-  function toggleSound() {
-    const video = videoRef.current;
-    if (!video) return;
-    video.muted = !video.muted;
-    setMuted(video.muted);
+  function scrollMore(direction: 1 | -1) {
+    moreTrackRef.current?.scrollBy({ left: direction * 220, behavior: "smooth" });
   }
 
   return (
     <section
-      ref={sectionRef}
-      className="relative flex min-h-screen flex-col overflow-hidden bg-krama-bg pt-20"
-      style={{ perspective: 1200 }}
+      className="relative flex min-h-screen flex-col overflow-hidden pt-20"
+      style={{ background: "var(--krama-gradient-hero)" }}
     >
-      {/* background video */}
-      <div
-        ref={videoWrapperRef}
-        className="fixed inset-0 z-0 overflow-hidden will-change-transform"
-      >
-        <video
-          ref={videoRef}
-          muted
-          autoPlay
-          loop
-          playsInline
-          className="motion-safe:animate-slow-push h-full w-full object-cover"
-          src={VIDEO_URL}
-        />
-      </div>
-
-      {/* bottom blur overlay */}
+      {/* giant background wordmark — KRAMA's own graphic device, not a borrowed logo */}
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[1] backdrop-blur-xl"
-        style={{
-          WebkitMaskImage: "linear-gradient(to top, black 0%, transparent 45%)",
-          maskImage: "linear-gradient(to top, black 0%, transparent 45%)",
-        }}
-      />
-
-      {/* heat scrim — KRAMA periwinkle */}
-      <div
-        ref={glowRef}
-        aria-hidden
-        className="pointer-events-none fixed inset-0 z-[1] mix-blend-screen will-change-transform"
-        style={{
-          background: "linear-gradient(to top, rgba(159,184,255,0.28), transparent 40%)",
-        }}
-      />
-
-      {/* drop-live badge */}
-      <div
-        className="animate-blur-fade-up glass-card absolute right-4 top-4 z-10 hidden items-center gap-1.5 rounded-pill px-3 py-1 sm:right-6 sm:flex md:right-10 md:top-6"
-        style={{ animationDelay: "200ms" }}
+        className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden"
       >
-        <Zap size={12} className="text-krama-accent" />
-        <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-krama-text-primary/90">
-          Drop Live
+        <span
+          className="select-none whitespace-nowrap font-display font-black uppercase leading-none text-white/[0.04]"
+          style={{ fontSize: "clamp(9rem, 34vw, 30rem)" }}
+        >
+          GATI
         </span>
       </div>
 
       {/* hero content */}
-      <div className="relative z-10 flex flex-1 flex-col justify-end gap-8 px-6 pb-8 sm:px-6 md:flex-row md:items-end md:px-12 md:pb-16">
-        <div className="flex-1">
-          <div
-            className="animate-blur-fade-up mb-6 flex items-center gap-4 text-xs"
-            style={{ animationDelay: "250ms" }}
-          >
+      <div className="relative z-10 mx-auto grid w-full max-w-screen-xl flex-1 grid-cols-1 items-center gap-10 px-6 py-10 md:grid-cols-2 md:gap-6 md:px-10 md:py-0">
+        {/* left: product story */}
+        <div className="flex flex-col gap-5 order-2 md:order-1">
+          <div className="animate-blur-fade-up flex items-center gap-4 text-xs" style={{ animationDelay: "150ms" }}>
             <span className="flex items-center gap-2">
               <span className="motion-safe:animate-pulse-dot h-2 w-2 rounded-pill bg-krama-accent" />
               <span className="font-mono uppercase tracking-[0.2em] text-krama-text-primary/80">
@@ -108,65 +66,150 @@ export function CampaignHero() {
             </span>
           </div>
 
-          <h1
-            className="animate-blur-fade-up mb-5 font-display text-4xl font-black uppercase leading-[0.92] tracking-[-0.03em] text-krama-text-primary sm:text-6xl md:text-7xl lg:text-[5.5rem]"
-            style={{ animationDelay: "400ms" }}
-          >
-            <span className="block">Precision of the City.</span>
-            <span className="block">Chaos of the Gully.</span>
-          </h1>
+          {active.badge && (
+            <span
+              className="animate-blur-fade-up w-fit rounded-pill bg-krama-accent/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-label text-krama-accent"
+              style={{ animationDelay: "200ms" }}
+            >
+              {active.badge}
+            </span>
+          )}
 
-          <p
-            className="animate-blur-fade-up mb-8 max-w-xl text-base text-white/60 sm:text-lg"
-            style={{ animationDelay: "520ms" }}
+          <h1
+            className="animate-blur-fade-up font-display text-5xl font-black uppercase leading-[0.9] tracking-[-0.03em] text-krama-text-primary sm:text-6xl md:text-7xl lg:text-[5rem]"
+            style={{ animationDelay: "250ms" }}
           >
-            Krama — the sequence, the step, the order found inside the noise. Built off
-            Mumbai&apos;s platforms and gullies, for a city that never walks the same line twice.
+            {active.name}
+          </h1>
+          <p
+            className="animate-blur-fade-up -mt-3 text-sm uppercase tracking-[0.2em] text-krama-accent-alt sm:text-base"
+            style={{ animationDelay: "320ms" }}
+          >
+            {active.colorway}
           </p>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="animate-blur-fade-up flex items-center gap-3" style={{ animationDelay: "380ms" }}>
+            <Rating value={active.rating} count={active.reviewCount} />
+          </div>
+
+          <div className="animate-blur-fade-up flex items-center gap-3" style={{ animationDelay: "420ms" }}>
+            <p className="font-mono text-2xl tabular-nums text-krama-text-primary">
+              {formatPrice(active.price)}
+            </p>
+            {active.originalPrice && (
+              <>
+                <p className="font-mono text-sm tabular-nums text-krama-text-primary/40 line-through">
+                  {formatPrice(active.originalPrice)}
+                </p>
+                <span className="rounded-pill bg-krama-danger/15 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-label text-krama-danger">
+                  {Math.round((1 - active.price / active.originalPrice) * 100)}% off
+                </span>
+              </>
+            )}
+          </div>
+
+          <p
+            className="animate-blur-fade-up max-w-md text-sm leading-relaxed text-white/60 sm:text-base"
+            style={{ animationDelay: "460ms" }}
+          >
+            Precision of the city. Chaos of the gully. Krama — the sequence, the step, the
+            order found inside the noise.
+          </p>
+
+          <div className="animate-blur-fade-up flex flex-wrap items-center gap-3" style={{ animationDelay: "520ms" }}>
             <Link
-              href="/product/gati-runner-gully-haze"
-              className="animate-blur-fade-up flex items-center gap-2 rounded-pill bg-white px-7 py-3 font-semibold text-black transition-colors hover:bg-white/90"
-              style={{ animationDelay: "620ms" }}
+              href={`/product/${active.slug}`}
+              className="flex items-center gap-2 rounded-pill bg-white px-7 py-3 font-semibold text-black transition-colors hover:bg-white/90"
             >
-              Shop Gati Runner
+              Shop This Colorway
               <ArrowRight size={18} />
             </Link>
             <button
-              onClick={toggleSound}
-              className="animate-blur-fade-up glass-card flex items-center gap-2 rounded-pill px-7 py-3 text-krama-text-primary"
-              style={{ animationDelay: "720ms" }}
+              aria-label="Add to wishlist"
+              onClick={() => {
+                toggleWishlist(active.id);
+                pushToast(wishlisted ? "Removed from wishlist" : "Added to wishlist", "info");
+              }}
+              className={clsx(
+                "glass-card grid h-[50px] w-[50px] shrink-0 place-items-center rounded-pill transition-colors duration-200",
+                wishlisted ? "text-krama-danger" : "text-krama-text-primary"
+              )}
             >
-              {muted ? <Volume2 size={18} /> : <VolumeX size={18} />}
-              {muted ? "Watch with Sound" : "Mute the Film"}
+              <Heart size={18} strokeWidth={1.5} fill={wishlisted ? "currentColor" : "none"} />
             </button>
-            <Link
-              href="/shop"
-              className="animate-blur-fade-up glass-card flex items-center gap-2 rounded-pill px-7 py-3 text-krama-text-primary"
-              style={{ animationDelay: "780ms" }}
-            >
-              <Heart size={18} />
-              Back the Drop
-            </Link>
           </div>
+
+          {FEATURED_VARIANTS.length > 1 && (
+            <div className="animate-blur-fade-up flex items-center gap-3 pt-1" style={{ animationDelay: "580ms" }}>
+              {FEATURED_VARIANTS.map((variant, i) => (
+                <ColorSwatch
+                  key={variant.id}
+                  hex={variant.accent}
+                  name={variant.colorway}
+                  selected={i === activeIndex}
+                  onClick={() => setActiveIndex(i)}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
-        <div className="flex gap-3 overflow-x-auto pb-1 sm:snap-x sm:snap-mandatory md:w-auto md:flex-col md:overflow-visible">
-          {STATS.map((stat) => (
-            <div
-              key={stat.label}
-              className="animate-blur-fade-up glass-card shrink-0 snap-center rounded-2xl px-5 py-4 text-right"
-              style={{ animationDelay: `${stat.delay}ms` }}
-            >
-              <p className="font-display text-2xl font-bold text-krama-text-primary">
-                {stat.value}
-              </p>
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+        {/* right: animated 3D-style shoe */}
+        <div className="glass-hero-tile relative order-1 aspect-square w-full overflow-hidden md:order-2">
+          <SneakerViewer
+            accent={active.accent}
+            sneakerClassName="h-auto w-[85%] drop-shadow-[0_20px_40px_rgba(0,0,0,0.5)] md:w-[95%]"
+          />
+        </div>
+      </div>
+
+      {/* bottom: more from the range */}
+      <div className="relative z-10 border-t border-white/10 px-6 py-6 md:px-10">
+        <div className="mx-auto flex max-w-screen-xl items-center gap-4">
+          <p className="hidden shrink-0 font-mono text-[11px] uppercase tracking-[0.2em] text-white/50 sm:block">
+            More from the range
+          </p>
+          <button
+            aria-label="Scroll left"
+            onClick={() => scrollMore(-1)}
+            className="glass-card hidden h-9 w-9 shrink-0 place-items-center rounded-pill text-krama-text-primary sm:grid"
+          >
+            <ChevronLeft size={16} />
+          </button>
+          <div
+            ref={moreTrackRef}
+            className="flex flex-1 gap-3 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {MORE_PRODUCTS.map((product) => (
+              <Link
+                key={product.id}
+                href={`/product/${product.slug}`}
+                className="glass-card flex w-[210px] shrink-0 items-center gap-3 rounded-2xl px-3 py-2.5 transition-transform duration-300 hover:scale-[1.03]"
+              >
+                <div
+                  className="grid h-12 w-12 shrink-0 place-items-center rounded-lg"
+                  style={{ background: `linear-gradient(160deg, ${product.accent}33, #0f172a)` }}
+                >
+                  <SneakerSilhouette accent={product.accent} className="w-[85%] -rotate-6" />
+                </div>
+                <div className="min-w-0">
+                  <p className="truncate text-xs font-medium text-krama-text-primary">
+                    {product.name}
+                  </p>
+                  <p className="font-mono text-xs tabular-nums text-white/50">
+                    {formatPrice(product.price)}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+          <button
+            aria-label="Scroll right"
+            onClick={() => scrollMore(1)}
+            className="glass-card hidden h-9 w-9 shrink-0 place-items-center rounded-pill text-krama-text-primary sm:grid"
+          >
+            <ChevronRight size={16} />
+          </button>
         </div>
       </div>
     </section>

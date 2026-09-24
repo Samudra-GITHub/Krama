@@ -6,7 +6,7 @@ A premium shopping experience inspired by Apple and Nike — built around storyt
 
 <br/>
 
-<img src="./assets/hero.png" width="100%" alt="Krama hero" />
+<img src="./assets/hero-placeholder.svg" width="100%" alt="Krama hero" />
 
 <br/>
 
@@ -14,12 +14,12 @@ A premium shopping experience inspired by Apple and Nike — built around storyt
 
 <table width="100%">
 <tr>
-<td width="50%"><img src="./assets/screenshots/home.png" width="100%" alt="Home" /><br/><sub align="center">Home</sub></td>
-<td width="50%"><img src="./assets/screenshots/dashboard.png" width="100%" alt="Shop" /><br/><sub align="center">Shop</sub></td>
+<td width="50%"><img src="./assets/screenshot-placeholder.svg" width="100%" alt="Home" /><br/><sub align="center">Home</sub></td>
+<td width="50%"><img src="./assets/screenshot-placeholder.svg" width="100%" alt="Shop" /><br/><sub align="center">Shop</sub></td>
 </tr>
 <tr>
-<td width="50%"><img src="./assets/screenshots/mobile.png" width="100%" alt="Mobile layout" /><br/><sub align="center">Mobile</sub></td>
-<td width="50%"><img src="./assets/screenshots/feature-1.png" width="100%" alt="Product page" /><br/><sub align="center">Product page</sub></td>
+<td width="50%"><img src="./assets/screenshot-placeholder.svg" width="100%" alt="Mobile layout" /><br/><sub align="center">Mobile</sub></td>
+<td width="50%"><img src="./assets/screenshot-placeholder.svg" width="100%" alt="Product page" /><br/><sub align="center">Product page</sub></td>
 </tr>
 </table>
 

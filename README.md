@@ -1,6 +1,22 @@
+<div align="center">
+
 # Krama
 
-> A luxury sneaker storefront built as an editorial, motion-driven front end, with no backend.
+**A luxury sneaker storefront, designed like a fashion editorial instead of a product grid.**
+
+Shop · product pages · cart and checkout · account · admin · lookbook · journal, all on seed data with no backend
+
+<br />
+
+**[Overview](#overview)** &nbsp;·&nbsp; **[Features](#features)** &nbsp;·&nbsp; **[Getting started](#getting-started)** &nbsp;·&nbsp; **[Architecture](#architecture)** &nbsp;·&nbsp; **[Structure](#project-structure)**
+
+<br />
+
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white) ![React](https://img.shields.io/badge/React-19-20232a?style=flat-square&logo=react&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?style=flat-square&logo=typescript&logoColor=white) ![Tailwind](https://img.shields.io/badge/Tailwind-4-06b6d4?style=flat-square&logo=tailwindcss&logoColor=white) ![GSAP](https://img.shields.io/badge/GSAP-3.15-88ce02?style=flat-square&logo=greensock&logoColor=white) ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+</div>
+
+---
 
 ## Overview
 
@@ -47,7 +63,6 @@ Krama/
 │   ├── store/              # Zustand stores: cart, wishlist, orders, addresses, payments, ...
 │   └── gsap.ts  useReducedMotion.ts  useFocusTrap.ts
 ├── scripts/stop-dev.ps1    # Windows helper that stops local Next.js servers
-├── assets/                 # README placeholder graphics
 ├── Makefile
 └── package.json
 ```
@@ -87,16 +102,12 @@ Two things to know before extending it:
 
 No deployment configuration is included. It is a standard Next.js app (`npm run build`, then `npm run start`).
 
-## Screenshots
-
-`assets/` holds only placeholder graphics, so no screenshots are shown.
-
 ## Future Improvements
 
 - Real payment processing
 - A live inventory and orders backend
 - A real 3D scene for the product viewer
-- Replace the placeholder screenshots with real captures
+- Add real screenshots to this README
 
 ## License
 

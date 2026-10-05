@@ -76,7 +76,7 @@ No environment variables are needed. Products, collections, drops, journal entri
 
 ## Architecture
 
-All pages are client-rendered views over seed data. Persistent state (cart, wishlist, addresses, payment methods, orders) lives in small Zustand stores that persist to `localStorage`. The admin console edits an in-memory copy of the seed data, so changes are not saved to a server.
+Content pages (home, collections, journal, product detail) are server components over seed data; interactive pages (shop, checkout, account, admin, lookbook, community) are client components. Persistent state (cart, wishlist, addresses, payment methods, orders) lives in small Zustand stores that persist to `localStorage`. The admin console edits an in-memory copy of the seed data, so changes are not saved to a server.
 
 Two things to know before extending it:
 

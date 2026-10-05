@@ -22,6 +22,22 @@ Shop · product pages · cart and checkout · account · admin · lookbook · jo
 
 Krama treats a sneaker drop like a fashion-publishing moment rather than a product listing. It is a complete storefront front end: catalog, product pages, cart, checkout, customer account, an admin console, and editorial pages (lookbook, journal, community). All data is local seed data and browser storage, so it runs with no services or API keys.
 
+## Preview
+
+<p align="center">
+  <img src="docs/screenshots/desktop-home.webp" width="880" alt="Krama home page: the Gati Runner drop with a drag-to-rotate sneaker viewport" />
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/add-to-cart.gif" width="640" alt="Choosing a size on a product page and adding it to the cart drawer" />
+  <br />
+  <sub>Pick a size, add to cart, open the cart drawer. Recorded from the running app. The sneaker is a placeholder illustration (see Architecture).</sub>
+</p>
+
+| Shop | Product | Admin |
+| :-- | :-- | :-- |
+| <img src="docs/screenshots/desktop-shop.webp" width="290" alt="Shop page with category, colourway and size filters" /> | <img src="docs/screenshots/desktop-product.webp" width="290" alt="Product page" /> | <img src="docs/screenshots/desktop-admin.webp" width="290" alt="Admin dashboard listing drops" /> |
+
 ## Features
 
 - **Shop and catalog** with filtering, collections, and product pages with gallery, sizes, colours, ratings and related products
